@@ -62,7 +62,9 @@ public class JsonReport implements Reporter {
 
       JsonObject location = new JsonObject();
       json.add("location", location);
-      location.addProperty("path", issue.getInputFile().getPath().replaceFirst("^/code-rw/", ""));
+
+      // Code Climate CLI expects relative path to file
+      location.addProperty("path", issue.getInputFile().getPath().replaceFirst("^/code-read-write/", ""));
 
       JsonObject lines = new JsonObject();
       location.add("lines", lines);
