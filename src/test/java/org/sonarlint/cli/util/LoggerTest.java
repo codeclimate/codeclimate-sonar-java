@@ -50,7 +50,7 @@ public class LoggerTest {
   @Test
   public void testInfo() {
     logger.info("info");
-    verify(stdOut).println("INFO: info");
+    verify(stdErr).println("INFO: info");
     verifyNoMoreInteractions(stdOut, stdErr);
   }
 
@@ -104,7 +104,7 @@ public class LoggerTest {
     logger.setDebugEnabled(true);
 
     logger.debug("debug");
-    verify(stdOut).println("DEBUG: debug");
+    verify(stdErr).println("DEBUG: debug");
 
     logger.setDebugEnabled(false);
     logger.debug("debug");

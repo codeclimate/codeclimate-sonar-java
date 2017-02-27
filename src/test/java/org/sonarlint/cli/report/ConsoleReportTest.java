@@ -76,15 +76,15 @@ public class ConsoleReportTest {
     report.execute(PROJECT_NAME, DATE, toTrackables(issues), result, k -> null);
 
     stdOut.flush();
-    assertThat(getLog(out)).contains("SonarLint Report");
-    assertThat(getLog(out)).contains("5 issues");
-    assertThat(getLog(out)).contains("1 major");
-    assertThat(getLog(out)).contains("1 minor");
-    assertThat(getLog(out)).contains("1 info");
-    assertThat(getLog(out)).contains("1 critical");
-    assertThat(getLog(out)).contains("1 blocker");
+    assertThat(getLog(err)).contains("SonarLint Report");
+    assertThat(getLog(err)).contains("5 issues");
+    assertThat(getLog(err)).contains("1 major");
+    assertThat(getLog(err)).contains("1 minor");
+    assertThat(getLog(err)).contains("1 info");
+    assertThat(getLog(err)).contains("1 critical");
+    assertThat(getLog(err)).contains("1 blocker");
 
-    assertThat(getLog(out)).doesNotContain("new");
+    assertThat(getLog(err)).doesNotContain("new");
   }
 
   private List<Trackable> toTrackables(List<Issue> issues) {
@@ -106,9 +106,9 @@ public class ConsoleReportTest {
     List<Issue> issues = new LinkedList<>();
     report.execute(PROJECT_NAME, DATE, toTrackables(issues), result, k -> null);
     stdOut.flush();
-    assertThat(getLog(out)).contains("SonarLint Report");
-    assertThat(getLog(out)).contains("No issues to display");
-    assertThat(getLog(out)).contains("1 file analyzed");
+    assertThat(getLog(err)).contains("SonarLint Report");
+    assertThat(getLog(err)).contains("No issues to display");
+    assertThat(getLog(err)).contains("1 file analyzed");
   }
 
   @Test
@@ -117,9 +117,9 @@ public class ConsoleReportTest {
     List<Issue> issues = new LinkedList<>();
     report.execute(PROJECT_NAME, DATE, toTrackables(issues), result, k -> null);
     stdOut.flush();
-    assertThat(getLog(out)).contains("SonarLint Report");
-    assertThat(getLog(out)).contains("No issues to display");
-    assertThat(getLog(out)).contains("2 files analyzed");
+    assertThat(getLog(err)).contains("SonarLint Report");
+    assertThat(getLog(err)).contains("No issues to display");
+    assertThat(getLog(err)).contains("2 files analyzed");
   }
 
   @Test
@@ -128,10 +128,10 @@ public class ConsoleReportTest {
     when(result.fileCount()).thenReturn(0);
     report.execute(PROJECT_NAME, DATE, toTrackables(issues), result, k -> null);
     stdOut.flush();
-    assertThat(getLog(out)).contains("SonarLint Report");
-    assertThat(getLog(out)).contains("No files analyzed");
+    assertThat(getLog(err)).contains("SonarLint Report");
+    assertThat(getLog(err)).contains("No files analyzed");
 
-    assertThat(getLog(out)).doesNotContain("issues");
+    assertThat(getLog(err)).doesNotContain("issues");
   }
 
   private String getLog(ByteArrayOutputStream byteStream) throws IOException {

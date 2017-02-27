@@ -128,7 +128,7 @@ public class MainTest {
     Exception e = createException("invalid operation", "analysis failed");
     doThrow(e).when(sonarLint).runAnalysis(anyMapOf(String.class, String.class), any(ReportFactory.class), any(InputFileFinder.class), any(Path.class));
     assertThat(main.run()).isEqualTo(Main.ERROR);
-    assertThat(getLogs(out)).contains("EXECUTION FAILURE");
+    assertThat(getLogs(err)).contains("EXECUTION FAILURE");
     assertThat(getLogs(err)).contains("invalid operation");
   }
 
@@ -191,7 +191,7 @@ public class MainTest {
     Exception e = createException("invalid operation", "analysis failed");
     doThrow(e).when(sonarLint).stop();
     assertThat(main.run()).isEqualTo(Main.ERROR);
-    assertThat(getLogs(out)).contains("EXECUTION FAILURE");
+    assertThat(getLogs(err)).contains("EXECUTION FAILURE");
     assertThat(getLogs(err)).contains("invalid operation");
   }
 
@@ -200,7 +200,7 @@ public class MainTest {
     Exception e = createException("invalid operation", "analysis failed");
     doThrow(e).when(sonarLint).runAnalysis(anyMapOf(String.class, String.class), eq(reportFactory), eq(fileFinder), any(Path.class));
     assertThat(main.run()).isEqualTo(Main.ERROR);
-    assertThat(getLogs(out)).contains("EXECUTION FAILURE");
+    assertThat(getLogs(err)).contains("EXECUTION FAILURE");
     assertThat(getLogs(err)).contains("invalid operation");
   }
 
@@ -210,7 +210,7 @@ public class MainTest {
     Exception e = createException("invalid operation", "analysis failed");
     doThrow(e).when(sonarLint).runAnalysis(anyMapOf(String.class, String.class), any(ReportFactory.class), any(InputFileFinder.class), any(Path.class));
     assertThat(main.run()).isEqualTo(Main.ERROR);
-    assertThat(getLogs(out)).contains("EXECUTION FAILURE");
+    assertThat(getLogs(err)).contains("EXECUTION FAILURE");
     assertThat(getLogs(err)).contains("invalid operation");
     assertThat(getLogs(err)).contains("analysis failed");
   }

@@ -45,7 +45,7 @@ public class ReportFactoryTest {
   @Test
   public void test() {
     List<Reporter> reporters = factory.createReporters(Paths.get("test"));
-    assertThat(reporters).hasSize(2);
+    assertThat(reporters).hasSize(3);
   }
 
   @Test

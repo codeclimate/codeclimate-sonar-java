@@ -42,6 +42,7 @@ public class ReportFactory {
 
     list.add(new ConsoleReport());
     list.add(new HtmlReport(basePath, getReportFile(basePath), charset));
+    list.add(new JsonReport());
 
     return list;
   }

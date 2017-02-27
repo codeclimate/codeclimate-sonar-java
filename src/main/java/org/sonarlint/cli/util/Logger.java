@@ -32,7 +32,7 @@ public class Logger {
     this.stdErr = System.err;
     this.stdOut = System.out;
   }
-  
+
   public Logger(PrintStream stdOut, PrintStream stdErr) {
     this.stdErr = stdErr;
     this.stdOut = stdOut;
@@ -64,7 +64,7 @@ public class Logger {
 
   public void debug(String message) {
     if (isDebugEnabled()) {
-      stdOut.println("DEBUG: " + message);
+      stdErr.println("DEBUG: " + message);
     }
   }
 
@@ -78,11 +78,11 @@ public class Logger {
   }
 
   public void info(String message) {
-    stdOut.println("INFO: " + message);
+    stdErr.println("INFO: " + message);
   }
 
   public void warn(String message) {
-    stdOut.println("WARN: " + message);
+    stdErr.println("WARN: " + message);
   }
 
   public void error(String message) {

@@ -34,8 +34,8 @@ import org.junit.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class StatsTest {
-  private PrintStream stdOut = mock(PrintStream.class);
-  private PrintStream stdErr;
+  private PrintStream stdOut;
+  private PrintStream stdErr = mock(PrintStream.class);
 
   @Before
   public void setUp() {
@@ -46,8 +46,8 @@ public class StatsTest {
   public void shouldPrintStats() throws UnsupportedEncodingException {
     new Stats().start().stop();
 
-    verify(stdOut).println(Mockito.contains("Total time: "));
-    verify(stdOut).println(Mockito.contains("Final Memory: "));
+    verify(stdErr).println(Mockito.contains("Total time: "));
+    verify(stdErr).println(Mockito.contains("Final Memory: "));
   }
 
   @Test
