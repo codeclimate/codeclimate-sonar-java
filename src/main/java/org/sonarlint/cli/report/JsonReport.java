@@ -70,7 +70,7 @@ public class JsonReport implements Reporter {
       if (issue.getStartLine() != null) {
         lines.addProperty("begin", issue.getStartLine());
 
-        if (issue.getStartLine() != null) {
+        if (issue.getEndLine() != null) {
           lines.addProperty("end", issue.getEndLine());
         } else {
           lines.addProperty("end", 1);
