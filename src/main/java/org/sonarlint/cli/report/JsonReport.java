@@ -48,6 +48,7 @@ public class JsonReport implements Reporter {
       JsonObject json = new JsonObject();
       json.addProperty("type", "issue");
       json.addProperty("check_name", issue.getRuleKey());
+      json.addProperty("severity", ruleDetails.getSeverity().toLowerCase());
 
       JsonArray categories = new JsonArray();
       json.add("categories", categories);
