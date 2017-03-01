@@ -27,6 +27,9 @@ RUN mkdir -p /code-read-write
 RUN chown -R app:app /code-read-write
 RUN chmod -R 777 /code-read-write
 
+# Increase Java memory limits
+ENV JAVA_OPTS="-XX:+UseParNewGC -XX:MinHeapFreeRatio=5 -XX:MaxHeapFreeRatio=10 -Xss4096k"
+
 # Switch to app user, copy code to writable
 # directory, and run the engine
 USER app
