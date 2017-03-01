@@ -34,4 +34,4 @@ ENTRYPOINT []
 WORKDIR /code-read-write
 CMD cp -R /code/* . && \
   /usr/src/app/dest/bin/sonarlint \
-  --src '**/*.{js,py,php,java}' --debug
+  --src '**/*.{js,py,php,java}'
