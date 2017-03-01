@@ -151,6 +151,11 @@ public class IssuesReport {
     }
 
     @Override
+    public String getType() {
+      return wrapped.getType();
+    }
+
+    @Override
     public Integer getStartLine() {
       return wrapped.getStartLine() != null ? wrapped.getStartLine() : 1;
     }
