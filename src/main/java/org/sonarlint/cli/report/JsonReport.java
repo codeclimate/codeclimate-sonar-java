@@ -24,6 +24,8 @@ import com.google.gson.JsonArray;
 import java.io.PrintStream;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
+import java.util.Arrays;
 import java.util.function.Function;
 import org.sonarlint.cli.util.Logger;
 import org.sonarsource.sonarlint.core.client.api.common.RuleDetails;
@@ -33,7 +35,10 @@ import org.sonarsource.sonarlint.core.tracking.Trackable;
 
 public class JsonReport implements Reporter {
 
-  private static final Logger LOGGER = Logger.get();
+  private static final List<String> VALID_RULE_DETAIL_TYPES = Arrays.asList(
+          "BUG",
+          "VULNERABILITY"
+  );
 
   JsonReport() {
 
@@ -45,45 +50,57 @@ public class JsonReport implements Reporter {
       Issue issue = trackable.getIssue();
       RuleDetails ruleDetails = ruleDescriptionProducer.apply(issue.getRuleKey());
 
-      JsonObject json = new JsonObject();
-      json.addProperty("type", "issue");
-      json.addProperty("check_name", issue.getRuleKey());
-      json.addProperty("severity", ruleDetails.getSeverity().toLowerCase());
+      if (VALID_RULE_DETAIL_TYPES.contains(ruleDetails.getType())) {
+        JsonObject json = new JsonObject();
+        json.addProperty("type", "issue");
+        json.addProperty("check_name", issue.getRuleKey());
+        json.addProperty("severity", ruleDetails.getSeverity().toLowerCase());
+        json.addProperty("description", issue.getMessage());
 
-      JsonArray categories = new JsonArray();
-      json.add("categories", categories);
-      categories.add("Bug Risk");
+        JsonObject content = new JsonObject();
+        json.add("content", content);
+        content.addProperty("body", ruleDetails.getHtmlDescription());
+        // // ruleDetails.getExtendedDescription();
 
-      json.addProperty("description", issue.getMessage());
+        JsonObject location = new JsonObject();
+        json.add("location", location);
 
-      JsonObject content = new JsonObject();
-      json.add("content", content);
-      content.addProperty("body", ruleDetails.getHtmlDescription());
-      // // ruleDetails.getExtendedDescription();
+        // Code Climate CLI expects relative path to file
+        location.addProperty("path", issue.getInputFile().getPath().replaceFirst("^/code-read-write/", ""));
 
-      JsonObject location = new JsonObject();
-      json.add("location", location);
+        JsonObject lines = new JsonObject();
+        location.add("lines", lines);
 
-      // Code Climate CLI expects relative path to file
-      location.addProperty("path", issue.getInputFile().getPath().replaceFirst("^/code-read-write/", ""));
+        if (issue.getStartLine() != null) {
+          lines.addProperty("begin", issue.getStartLine());
 
-      JsonObject lines = new JsonObject();
-      location.add("lines", lines);
-
-      if (issue.getStartLine() != null) {
-        lines.addProperty("begin", issue.getStartLine());
-
-        if (issue.getEndLine() != null) {
-          lines.addProperty("end", issue.getEndLine());
+          if (issue.getEndLine() != null) {
+            lines.addProperty("end", issue.getEndLine());
+          } else {
+            lines.addProperty("end", 1);
+          }
         } else {
+          lines.addProperty("begin", 1);
           lines.addProperty("end", 1);
         }
-      } else {
-        lines.addProperty("begin", 1);
-        lines.addProperty("end", 1);
-      }
 
-      System.out.println(json.toString() + "\0");
+        String category;
+        switch (ruleDetails.getType()) {
+          case "VULNERABILITY": {
+            category = "Security";
+            break;
+          }
+          default: {
+            category = "Bug Risk";
+            break;
+          }
+        }
+        JsonArray categories = new JsonArray();
+        categories.add(category);
+        json.add("categories", categories);
+
+        System.out.println(json.toString() + "\0");
+      }
     }
   }
 }
