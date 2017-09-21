@@ -44,7 +44,7 @@
     <maven.test.redirectTestOutputToFile>true</maven.test.redirectTestOutputToFile>
     <gitRepositoryName>sonarlint-cli</gitRepositoryName>
     <sonarlint.version>2.10.0.367</sonarlint.version>
-    <sonar.java.version>4.3.0.7717</sonar.java.version>
+    <sonar.java.version>4.13.0.11627</sonar.java.version>
     <sonar.javascript.version>2.18.0.3454</sonar.javascript.version>
     <sonar.php.version>2.9.1.1705</sonar.php.version>
     <sonar.python.version>1.6</sonar.python.version>
@@ -96,7 +96,7 @@
     </dependency>
 
   </dependencies>
-  
+
   <build>
     <plugins>
       <plugin>
@@ -140,7 +140,7 @@
           </execution>
         </executions>
       </plugin>
-      
+
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-dependency-plugin</artifactId>
