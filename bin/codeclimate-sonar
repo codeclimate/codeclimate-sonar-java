@@ -1,0 +1,15 @@
+#!/usr/bin/env sh
+set -x
+
+BUILD_DIR=$(dirname $0)
+LIBS=$(find ${BUILD_DIR}/libs -name "*.jar" | tr "\n" ":")
+
+CODE_DIR=$1; shift
+
+java \
+  -cp ${BUILD_DIR}/classes/groovy/main/:${LIBS} \
+  -Djava.awt.headless=true  \
+  -Dsonarlint.home="${BUILD_DIR}"  \
+  -Dproject.home="${CODE_DIR}"  \
+  -Dorg.freemarker.loggerLibrary=none  \
+  cc.App --src "**/*.java" $@

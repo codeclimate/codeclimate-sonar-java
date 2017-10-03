@@ -1,0 +1,37 @@
+apply plugin: 'groovy'
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    // Use the latest Groovy version for building this library
+    compile('org.codehaus.groovy:groovy-all:2.4.11')
+    compile('org.sonarsource.sonarlint:sonarlint-cli:2.1.0.566') { exclude group: 'org.slf4j' }
+    compile('org.slf4j:slf4j-api:1.6.6')
+    compile('org.sonarsource.java:sonar-java-plugin:4.3.0.7717')
+
+    // Use the awesome Spock testing and specification framework
+    testCompile('org.spockframework:spock-core:1.0-groovy-2.4')
+}
+
+task copyLibs(type: Copy) {
+    into "${buildDir}/libs"
+    from configurations.runtime
+    exclude "sonar-*-plugin*.jar"
+}
+
+task copyPlugins(type: Copy) {
+    into "${buildDir}/plugins"
+    from configurations.runtime
+    include "sonar-*-plugin*.jar"
+}
+
+task copyRunnable(type: Copy) {
+    into "${buildDir}"
+    from "bin/codeclimate-sonar"
+}
+
+build.dependsOn(copyPlugins)
+build.dependsOn(copyLibs)
+build.dependsOn(copyRunnable)
