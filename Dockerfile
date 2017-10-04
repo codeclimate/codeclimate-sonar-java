@@ -13,6 +13,10 @@ RUN chmod -R 777 /code-read-write
 
 ENV GRADLE_USER_HOME=/opt/gradle
 
+# Cache dependencies
+COPY ./build.gradle /opt/
+RUN cd /opt && gradle build
+
 COPY . /usr/src/app
 RUN chown -R app:app /usr/src/app
 
