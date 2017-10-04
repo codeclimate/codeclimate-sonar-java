@@ -21,7 +21,7 @@ COPY . /usr/src/app
 RUN chown -R app:app /usr/src/app
 
 WORKDIR /usr/src/app
-RUN gradle clean build
+RUN gradle clean build -x test
 
 # Increase Java memory limits
 ENV JAVA_OPTS="-XX:+UseParNewGC -XX:MinHeapFreeRatio=5 -XX:MaxHeapFreeRatio=10 -Xss4096k"

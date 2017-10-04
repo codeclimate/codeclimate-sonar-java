@@ -1,4 +1,4 @@
-apply plugin: "groovy"
+apply plugin: "java"
 
 repositories {
     jcenter()
@@ -21,9 +21,10 @@ task copyRunnable(type: Copy) {
     from "bin/codeclimate-sonar"
 }
 
-build.dependsOn(copyPlugins)
-build.dependsOn(copyLibs)
-build.dependsOn(copyRunnable)
+task infra(dependsOn: ["copyPlugins", "copyLibs", "copyRunnable", "jar"])
+
+build.dependsOn(infra)
+test.dependsOn(infra)
 
 dependencies {
     compile("org.sonarsource.sonarlint.core:sonarlint-core:2.10.0.367")
@@ -33,5 +34,13 @@ dependencies {
     // Plugins
     compile("org.sonarsource.java:sonar-java-plugin:4.3.0.7717")
 
+    testCompile("org.assertj:assertj-core:2.8.0")
     testCompile("junit:junit:4.12")
+}
+
+test {
+    outputs.upToDateWhen { false }
+    testLogging {
+        exceptionFormat "full"
+    }
 }
