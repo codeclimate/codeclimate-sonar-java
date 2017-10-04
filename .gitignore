@@ -1,3 +1,7 @@
+.gradle/
 build/
 **/*.class
 **/.sonarlint
+*.iml
+*.ipr
+*.iws
