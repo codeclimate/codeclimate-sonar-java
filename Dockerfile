@@ -6,7 +6,8 @@ USER root
 RUN adduser -u 9000 -D app
 VOLUME /code
 
-# Create a writeable directory for the code
+# Create a writeable directory for the code as sonar needs to
+# create a `.sonarlint` directory during analysis
 RUN mkdir -p /code-read-write
 RUN chown -R app:app /code-read-write
 RUN chmod -R 777 /code-read-write
