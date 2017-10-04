@@ -1,13 +1,13 @@
 #!/usr/bin/env sh
-set -x
 
 BUILD_DIR=$(dirname $0)
 LIBS=$(find ${BUILD_DIR}/libs -name "*.jar" | tr "\n" ":")
+CORE=$(find ${BUILD_DIR}/libs -name "sonarlint-core*.jar" -or -name "sonarlint-client-api*.jar" | tr "\n" ":")
 
 CODE_DIR=$1; shift
 
 java \
-  -cp ${BUILD_DIR}/classes/groovy/main/:${LIBS} \
+  -cp ${CORE}:${LIBS} \
   -Djava.awt.headless=true  \
   -Dsonarlint.home="${BUILD_DIR}"  \
   -Dproject.home="${CODE_DIR}"  \
