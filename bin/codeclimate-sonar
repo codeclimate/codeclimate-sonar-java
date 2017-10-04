@@ -1,13 +1,14 @@
 #!/usr/bin/env sh
 
 BUILD_DIR=$(dirname $0)
+APP=$(find ${BUILD_DIR}/libs -name "codeclimate*.jar" | tr "\n" ":")
 LIBS=$(find ${BUILD_DIR}/libs -name "*.jar" | tr "\n" ":")
 CORE=$(find ${BUILD_DIR}/libs -name "sonarlint-core*.jar" -or -name "sonarlint-client-api*.jar" | tr "\n" ":")
 
 CODE_DIR=$1; shift
 
 java \
-  -cp ${CORE}:${LIBS} \
+  -cp ${APP}:${CORE}:${LIBS} \
   -Djava.awt.headless=true  \
   -Dsonarlint.home="${BUILD_DIR}"  \
   -Dproject.home="${CODE_DIR}"  \
