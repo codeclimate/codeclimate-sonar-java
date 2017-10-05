@@ -9,6 +9,6 @@ public class ConfigTest {
     @Test
     public void include_paths() throws Exception {
         Config config = Config.from("fixtures/multiple_paths/config.json");
-        assertThat(config.includePaths).containsOnly("Main.java", "src/main/java/");
+        assertThat(config.includePaths).containsOnly("Main.java", "src/included/");
     }
 }
