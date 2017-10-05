@@ -46,11 +46,7 @@ public class CustomMain extends org.sonarlint.cli.Main {
         super(opts, sonarLintFactory, reportFactory, fileFinder, projectHome);
     }
 
-    public static void main(String[] args) {
-        execute(args, System2.INSTANCE);
-    }
-
-    static void execute(String[] args, System2 system) {
+    public static void execute(String[] args, System2 system) {
         Options parsedOpts;
         try {
             parsedOpts = Options.parse(args);
