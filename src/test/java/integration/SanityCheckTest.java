@@ -1,6 +1,7 @@
-package cc;
+package integration;
 
 import org.junit.Test;
+import support.Shell;
 
 import java.util.Arrays;
 import java.util.List;
