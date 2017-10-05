@@ -45,7 +45,7 @@ public class SanityCheckTest {
                         "\"end\":23}}," +
                         "\"categories\":[\"Bug Risk\"]}\u0000");
 
-        Shell.Process process = Shell.execute("build/codeclimate-sonar fixtures/");
+        Shell.Process process = Shell.execute("build/codeclimate-sonar fixtures/java_lib");
 
         assertThat(process.exitCode).isEqualTo(0);
         assertThat(process.stdout).contains(expectedOutput);
