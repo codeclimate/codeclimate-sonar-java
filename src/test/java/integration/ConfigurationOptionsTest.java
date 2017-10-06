@@ -5,7 +5,6 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.sonarlint.cli.SonarProperties;
-import org.sonarlint.cli.util.System2;
 import support.TestSystem;
 
 import java.io.ByteArrayOutputStream;
@@ -17,11 +16,10 @@ public class ConfigurationOptionsTest {
     ByteArrayOutputStream stdout;
     ByteArrayOutputStream stderr;
 
-    System2 system;
+    TestSystem system;
 
     @BeforeClass
     public static void beforeAll() {
-        System.setProperty(SonarProperties.PROJECT_HOME, "fixtures/multiple_paths");
         System.setProperty(SonarProperties.SONARLINT_HOME, "build");
     }
 
@@ -33,10 +31,14 @@ public class ConfigurationOptionsTest {
 
         System.setOut(new PrintStream(stdout));
         System.setErr(new PrintStream(stderr));
+
+        system.setProperty(SonarProperties.PROJECT_HOME, "fixtures/multiple_paths");
     }
 
     @Test
     public void limit_path_included_within_analysis() throws Exception {
+        system.setProperty("config", "fixtures/multiple_paths/config.json");
+
         App.execute(new String[]{}, system);
 
         String output = stdout.toString();
@@ -44,4 +46,15 @@ public class ConfigurationOptionsTest {
         assertThat(output).doesNotContain("fixtures/multiple_paths/src/excluded/java/pkg1/HasIssue.java");
     }
 
+    @Test
+    public void include_all_files_by_default() throws Exception {
+        App.execute(new String[]{}, system);
+
+        String output = stdout.toString();
+        assertThat(output).contains(
+                "issue",
+                "fixtures/multiple_paths/src/included/java/pkg1/HasIssue.java",
+                "fixtures/multiple_paths/src/excluded/java/pkg1/HasIssue.java"
+        );
+    }
 }

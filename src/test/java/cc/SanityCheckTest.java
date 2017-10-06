@@ -47,8 +47,7 @@ public class SanityCheckTest {
 
         Shell.Process process = Shell.execute("build/codeclimate-sonar fixtures/");
 
-        assertThat(process.exitCode).isEqualTo(0);
-        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>." + process.stdout);
         assertThat(process.stdout).contains(expectedOutput);
+        assertThat(process.exitCode).isEqualTo(0);
     }
 }
