@@ -1,12 +1,12 @@
-package cc;
+package cc.report;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.sonarsource.sonarlint.core.client.api.common.RuleDetails;
 import org.sonarsource.sonarlint.core.tracking.Trackable;
-import support.fakes.FakeRuleDetails;
 import support.OutputHelper;
 import support.fakes.FakeIssue;
+import support.fakes.FakeRuleDetails;
 import support.fakes.FakeTrackable;
 
 import java.util.Date;

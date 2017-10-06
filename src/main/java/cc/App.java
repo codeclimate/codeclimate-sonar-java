@@ -30,7 +30,7 @@ public class App {
             Charset charset = createCharset(parsedOpts);
 
             Config config = Config.from(system.getProperty("config"));
-            InputFileFinder fileFinder = new Finder(config.includePaths, parsedOpts.tests(), charset);
+            InputFileFinder fileFinder = new Finder(config.getIncludePaths(), config.getTestsPatterns(), charset);
             ReportFactory reportFactory = new cc.report.ReportFactory(charset);
             ConfigurationReader reader = new ConfigurationReader();
             SonarLintFactory sonarLintFactory = new SonarLintFactory(reader);

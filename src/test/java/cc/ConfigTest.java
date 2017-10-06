@@ -9,12 +9,30 @@ public class ConfigTest {
     @Test
     public void include_paths() throws Exception {
         Config config = Config.from("fixtures/multiple_paths/config.json");
-        assertThat(config.includePaths).containsOnly("Main.java", "src/included/");
+        assertThat(config.getIncludePaths()).containsOnly("Main.java", "src/included/");
     }
 
     @Test
     public void default_config_path_include_base_dir() throws Exception {
         Config config = new Config();
-        assertThat(config.includePaths).containsOnly("");
+        assertThat(config.getIncludePaths()).containsOnly("");
+    }
+
+    @Test
+    public void fetch_charset() throws Exception {
+        Config config = Config.gson().fromJson("{\"config\":{\"charset\":\"utf-8\"}}", Config.class);
+        assertThat(config.getCharset()).isEqualTo("utf-8");
+    }
+
+    @Test
+    public void fetch_tests_patterns() throws Exception {
+        Config config = Config.gson().fromJson("{\"config\":{\"tests_patterns\":[\"src/test/**\",\"src/test2/**\"]}}", Config.class);
+        assertThat(config.getTestsPatterns()).isEqualTo("{src/test/**,src/test2/**}");
+    }
+
+    @Test
+    public void fetch_exclusion_patterns() throws Exception {
+        Config config = Config.gson().fromJson("{\"config\":{\"exclusion_patterns\":[\"src/excluded/**\",\"src/test2/**\"]}}", Config.class);
+        assertThat(config.getExclusionPatterns()).isEqualTo("{src/excluded/**,src/test2/**}");
     }
 }
