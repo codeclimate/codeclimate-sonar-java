@@ -37,11 +37,23 @@ public class ConfigurationOptionsTest {
 
     @Test
     public void limit_path_included_within_analysis() throws Exception {
-        App.execute(new String[]{}, system);
+        App.execute(new String[]{"-Dconfig=fixtures/multiple_paths/config.json"}, system);
 
         String output = stdout.toString();
         assertThat(output).contains("issue", "fixtures/multiple_paths/src/included/java/pkg1/HasIssue.java");
         assertThat(output).doesNotContain("fixtures/multiple_paths/src/excluded/java/pkg1/HasIssue.java");
+    }
+
+    @Test
+    public void include_all_files_by_default() throws Exception {
+        App.execute(new String[]{}, system);
+
+        String output = stdout.toString();
+        assertThat(output).contains(
+                "issue",
+                "fixtures/multiple_paths/src/included/java/pkg1/HasIssue.java",
+                "fixtures/multiple_paths/src/excluded/java/pkg1/HasIssue.java"
+        );
     }
 
 }

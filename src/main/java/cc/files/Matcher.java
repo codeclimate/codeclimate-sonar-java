@@ -1,14 +1,11 @@
 package cc.files;
 
-import org.sonarlint.cli.InputFileFinder;
-import org.sonarsource.sonarlint.core.client.api.common.analysis.ClientInputFile;
-
 import java.nio.charset.Charset;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.nio.file.PathMatcher;
 
-public class FileMatcher {
+public class Matcher {
     private static final String GLOB_PREFIX = "glob:";
     public static PathMatcher ACCEPT_ALL = p -> true;
     public static PathMatcher REFUSE_ALL = p -> false;
@@ -18,14 +15,14 @@ public class FileMatcher {
     final PathMatcher excludeMatcher;
     final Charset charset;
 
-    public FileMatcher(PathMatcher srcMatcher, PathMatcher testsMatcher, PathMatcher excludeMatcher, Charset charset) {
+    public Matcher(PathMatcher srcMatcher, PathMatcher testsMatcher, PathMatcher excludeMatcher, Charset charset) {
         this.srcMatcher = srcMatcher;
         this.testsMatcher = testsMatcher;
         this.excludeMatcher = excludeMatcher;
         this.charset = charset;
     }
 
-    public FileMatcher(String srcGlobPattern, String testsGlobPattern, String excludeGlobPattern, Charset charset) {
+    public Matcher(String srcGlobPattern, String testsGlobPattern, String excludeGlobPattern, Charset charset) {
         this(create(srcGlobPattern, ACCEPT_ALL), create(testsGlobPattern, REFUSE_ALL), create(excludeGlobPattern, REFUSE_ALL), charset);
     }
 
