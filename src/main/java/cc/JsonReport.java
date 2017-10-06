@@ -44,7 +44,7 @@ public class JsonReport implements org.sonarlint.cli.report.Reporter {
                 json.add("location", location);
 
                 // Code Climate CLI expects relative path to file
-                location.addProperty("path", issue.getInputFile().getPath().replaceFirst("^/code-read-write/", ""));
+                location.addProperty("path", issue.getInputFile().getPath().replaceFirst("^/tmp/code/", ""));
 
                 JsonObject lines = new JsonObject();
                 location.add("lines", lines);
