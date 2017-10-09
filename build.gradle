@@ -35,10 +35,13 @@ dependencies {
     compile("org.sonarsource.sonarlint.core:sonarlint-core:2.10.0.367")
     compile("org.sonarsource.sonarlint.core:sonarlint-client-api:2.10.0.367")
     compile("org.sonarsource.sonarlint:sonarlint-cli:2.1.0.566")
+    compile("com.google.code.gson:gson:2.6.2")
+
 
     // Plugins
     compile("org.sonarsource.java:sonar-java-plugin:4.3.0.7717")
 
+    testCompile("org.mockito:mockito-core:2.+")
     testCompile("org.assertj:assertj-core:2.8.0")
     testCompile("junit:junit:4.12")
 }
@@ -46,6 +49,7 @@ dependencies {
 test {
     outputs.upToDateWhen { false }
     testLogging {
+        events "passed", "skipped", "failed", "standardOut", "standardError"
         exceptionFormat "full"
     }
 }

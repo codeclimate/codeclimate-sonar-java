@@ -1,6 +1,7 @@
-package cc;
+package integration;
 
 import org.junit.Test;
+import support.Shell;
 
 import java.util.Arrays;
 import java.util.List;
@@ -45,9 +46,9 @@ public class SanityCheckTest {
                         "\"end\":23}}," +
                         "\"categories\":[\"Bug Risk\"]}\u0000");
 
-        Shell.Process process = Shell.execute("build/codeclimate-sonar fixtures/");
+        Shell.Process process = Shell.execute("build/codeclimate-sonar fixtures/java_lib");
 
-        assertThat(process.exitCode).isEqualTo(0);
         assertThat(process.stdout).contains(expectedOutput);
+        assertThat(process.exitCode).isEqualTo(0);
     }
 }

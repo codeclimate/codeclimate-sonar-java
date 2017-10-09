@@ -19,6 +19,8 @@
  */
 package org.sonarlint.cli;
 
+import cc.Config;
+import cc.files.Finder;
 import cc.JsonReport;
 import org.sonarlint.cli.analysis.SonarLintFactory;
 import org.sonarlint.cli.config.ConfigurationReader;
@@ -46,11 +48,7 @@ public class CustomMain extends org.sonarlint.cli.Main {
         super(opts, sonarLintFactory, reportFactory, fileFinder, projectHome);
     }
 
-    public static void main(String[] args) {
-        execute(args, System2.INSTANCE);
-    }
-
-    static void execute(String[] args, System2 system) {
+    public static void execute(String[] args, System2 system) {
         Options parsedOpts;
         try {
             parsedOpts = Options.parse(args);
@@ -74,7 +72,8 @@ public class CustomMain extends org.sonarlint.cli.Main {
             return;
         }
 
-        InputFileFinder fileFinder = new InputFileFinder(parsedOpts.src(), parsedOpts.tests(), parsedOpts.exclusions(), charset);
+        Config config = Config.from(system.getProperty("config"));
+        InputFileFinder fileFinder = new Finder(config.includePaths, parsedOpts.src(), parsedOpts.tests(), parsedOpts.exclusions(), charset);
         ReportFactory reportFactory = new CustomReportFactory(charset);
         ConfigurationReader reader = new ConfigurationReader();
         SonarLintFactory sonarLintFactory = new SonarLintFactory(reader);
