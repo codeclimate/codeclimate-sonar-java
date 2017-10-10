@@ -12,7 +12,11 @@ dependencies:
       --env GCR_JSON_KEY
       --volume /var/run/docker.sock:/var/run/docker.sock
       codeclimate/patrick pull || true
-    - docker build --rm --tag codeclimate/codeclimate-checks .
+    - make image
+
+test:
+  override:
+    - make test
 
 deployment:
   registry:

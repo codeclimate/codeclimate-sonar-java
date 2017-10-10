@@ -1,40 +1,42 @@
-FROM maven:3.3.9-jdk-8-alpine
+FROM java:8-jdk-alpine
 
 MAINTAINER Code Climate
 
-# Create user and app directory
 RUN adduser -u 9000 -D app
-COPY . /usr/src/app
-RUN chown -R app:app /usr/src/app
-
-# Package the app with Maven
-WORKDIR /usr/src/app
-RUN mvn package
-
-# Unzip the packaged app
-RUN mkdir /usr/src/app/dest
-RUN unzip /usr/src/app/target/sonarlint-cli-*.zip \
-  -d /usr/src/app/dest
-RUN cp -R /usr/src/app/dest/sonarlint-cli-*/* \
-  /usr/src/app/dest
-
-# Specify the /code volume
-# as needed by CC
 VOLUME /code
-
-# Create a writeable directory for the code
-RUN mkdir -p /code-read-write
-RUN chown -R app:app /code-read-write
-RUN chmod -R 777 /code-read-write
 
 # Increase Java memory limits
 ENV JAVA_OPTS="-XX:+UseParNewGC -XX:MinHeapFreeRatio=5 -XX:MaxHeapFreeRatio=10 -Xss4096k"
 
-# Switch to app user, copy code to writable
-# directory, and run the engine
+ENV GRADLE_VERSION=4.2.1
+ENV GRADLE_HOME=/opt/gradle
+ENV GRADLE_FOLDER=$GRADLE_HOME
+ENV GRADLE_USER_HOME=$GRADLE_HOME
+ENV PATH=$GRADLE_HOME/bin:$PATH
+
+RUN mkdir -p $GRADLE_USER_HOME && \
+      chown -R app:app $GRADLE_USER_HOME && \
+      chmod g+s $GRADLE_USER_HOME && \
+      apk update && \
+      apk add --virtual .build-dependencies ca-certificates wget && \
+      update-ca-certificates && \
+      wget https://downloads.gradle.org/distributions/gradle-${GRADLE_VERSION}-bin.zip && \
+      unzip gradle-${GRADLE_VERSION}-bin.zip -d /opt && \
+      mv /opt/gradle-${GRADLE_VERSION}/* $GRADLE_HOME && \
+      rm -f gradle-${GRADLE_VERSION}-bin.zip && \
+      apk del .build-dependencies
+
+WORKDIR /usr/src/app
+
+# Cache dependencies
+COPY build.gradle ./
+RUN gradle infra
+
+COPY . ./
+RUN chown -R app:app ./
+
+RUN gradle clean build -x test
+
 USER app
-ENTRYPOINT []
-WORKDIR /code-read-write
-CMD cp -R /code/* . && \
-  /usr/src/app/dest/bin/sonarlint \
-  --src 'src/main/**/*.java'
+WORKDIR /code
+CMD cp -R /code /tmp/ && /usr/src/app/build/codeclimate-sonar /tmp/code

@@ -1,12 +1,15 @@
+**/.sonarlint
 
-# ---- Maven
+# ---- Build related
+.gradle/
+build/
 target/
-dependency-reduced-pom.xml
+**/*.class
 
 # ---- IntellijIDEA
-*.iws
 *.iml
 *.ipr
+*.iws
 .idea/
 
 # ---- Eclipse
@@ -19,12 +22,13 @@ dependency-reduced-pom.xml
 Icon?
 # Thumbnails
 ._*
+
 # Files that might appear on external disk
 .Spotlight-V100
 .Trashes
 
 # ---- Windows
 # Windows image file caches
-Thumbs.db 
+Thumbs.db
 # Folder config file
 Desktop.ini
