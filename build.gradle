@@ -46,6 +46,7 @@ dependencies {
 test {
     outputs.upToDateWhen { false }
     testLogging {
+        events "passed", "skipped", "failed", "standardOut", "standardError"
         exceptionFormat "full"
     }
 }
