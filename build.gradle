@@ -41,7 +41,6 @@ dependencies {
     // Plugins
     compile("org.sonarsource.java:sonar-java-plugin:4.3.0.7717")
 
-    testCompile("org.mockito:mockito-core:2.+")
     testCompile("org.assertj:assertj-core:2.8.0")
     testCompile("junit:junit:4.12")
 }
