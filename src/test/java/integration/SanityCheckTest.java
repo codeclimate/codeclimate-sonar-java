@@ -1,10 +1,9 @@
 package integration;
 
+import org.assertj.core.util.Strings;
 import org.junit.Test;
+import org.skyscreamer.jsonassert.JSONAssert;
 import support.Shell;
-
-import java.util.Arrays;
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -12,7 +11,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class SanityCheckTest {
     @Test
     public void executeJavaLibFixture() throws Exception {
-        List<String> expectedOutput = Arrays.asList("{\"type\":\"issue\"," +
+        String expectedOutput =
+                "[" +
+                "{\"type\":\"issue\"," +
                         "\"check_name\":\"squid:S1994\"," +
                         "\"severity\":\"major\"," +
                         "\"description\":\"This loop's stop condition tests \\\"k\\\" but the incrementer updates \\\"i\\\".\"," +
@@ -22,8 +23,8 @@ public class SanityCheckTest {
                         "\"location\":{\"path\":\"fixtures/java_lib/main/java/Library.java\"," +
                         "\"lines\":{\"begin\":17," +
                         "\"end\":17}}," +
-                        "\"categories\":[\"Bug Risk\"]}\u0000",
-                "{\"type\":\"issue\"," +
+                        "\"categories\":[\"Bug Risk\"]}" +
+                ",{\"type\":\"issue\"," +
                         "\"check_name\":\"squid:S1994\"," +
                         "\"severity\":\"major\"," +
                         "\"description\":\"This loop's stop condition tests \\\"k\\\" but the incrementer updates \\\"i\\\".\"," +
@@ -33,8 +34,8 @@ public class SanityCheckTest {
                         "\"location\":{\"path\":\"fixtures/java_lib/main/java/Library.java\"," +
                         "\"lines\":{\"begin\":20," +
                         "\"end\":20}}," +
-                        "\"categories\":[\"Bug Risk\"]}\u0000",
-                "{\"type\":\"issue\"," +
+                        "\"categories\":[\"Bug Risk\"]}" +
+                ",{\"type\":\"issue\"," +
                         "\"check_name\":\"squid:S1994\"," +
                         "\"severity\":\"major\"," +
                         "\"description\":\"This loop's stop condition tests \\\"k\\\" but the incrementer updates \\\"i\\\".\"," +
@@ -44,11 +45,15 @@ public class SanityCheckTest {
                         "\"location\":{\"path\":\"fixtures/java_lib/main/java/Library.java\"," +
                         "\"lines\":{\"begin\":23," +
                         "\"end\":23}}," +
-                        "\"categories\":[\"Bug Risk\"]}\u0000");
+                        "\"categories\":[\"Bug Risk\"]}" +
+                "]";
 
         Shell.Process process = Shell.execute("build/codeclimate-sonar fixtures/java_lib");
 
         assertThat(process.exitCode).isEqualTo(0);
-        assertThat(process.stdout).contains(expectedOutput);
+        assertThat(process.stdout).contains("\u0000");
+
+        String stdoutAsJson = "[" + Strings.join(process.stdout.split("\u0000")).with(",") + "]";
+        JSONAssert.assertEquals(stdoutAsJson, expectedOutput, false);
     }
 }
