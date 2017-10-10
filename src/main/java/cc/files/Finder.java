@@ -9,6 +9,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import static java.nio.file.Files.isDirectory;
@@ -28,8 +29,8 @@ public class Finder extends InputFileFinder {
     @Override
     public List<ClientInputFile> collect(Path baseDir) throws IOException {
         return findPaths(baseDir).stream()
-                .map(p -> toClientInputFile(baseDir, p))
-                .filter(f -> f != null)
+                .map(path -> toClientInputFile(baseDir, path))
+                .filter(Objects::nonNull)
                 .collect(Collectors.toList());
     }
 

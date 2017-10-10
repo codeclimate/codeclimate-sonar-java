@@ -46,7 +46,7 @@ public class Matcher {
                 return defaultMatcher;
             }
         } catch (Exception e) {
-            throw new RuntimeException("Error creating create with pattern: " + pattern, e);
+            throw new RuntimeException("Error creating matcher with pattern: " + pattern, e);
         }
     }
 }
