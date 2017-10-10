@@ -19,11 +19,11 @@ public class Finder extends InputFileFinder {
     final Charset charset;
     final Matcher matcher;
 
-    public Finder(List<String> includedPaths, String srcGlobPattern, String testsGlobPattern, String excludeGlobPattern, Charset charset) {
-        super(srcGlobPattern, testsGlobPattern, excludeGlobPattern, charset);
+    public Finder(List<String> includedPaths, String testsGlobPattern, String excludeGlobPattern, Charset charset) {
+        super(null, testsGlobPattern, excludeGlobPattern, charset);
         this.includedPaths = includedPaths;
         this.charset = charset;
-        this.matcher = new Matcher(srcGlobPattern, testsGlobPattern, excludeGlobPattern, charset);
+        this.matcher = new Matcher(testsGlobPattern, excludeGlobPattern, charset);
     }
 
     @Override

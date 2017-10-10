@@ -73,7 +73,7 @@ public class CustomMain extends org.sonarlint.cli.Main {
         }
 
         Config config = Config.from(system.getProperty("config"));
-        InputFileFinder fileFinder = new Finder(config.includePaths, parsedOpts.src(), parsedOpts.tests(), parsedOpts.exclusions(), charset);
+        InputFileFinder fileFinder = new Finder(config.includePaths, parsedOpts.tests(), parsedOpts.exclusions(), charset);
         ReportFactory reportFactory = new CustomReportFactory(charset);
         ConfigurationReader reader = new ConfigurationReader();
         SonarLintFactory sonarLintFactory = new SonarLintFactory(reader);
