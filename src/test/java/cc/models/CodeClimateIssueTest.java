@@ -3,6 +3,7 @@ package cc.models;
 import cc.serialization.GsonFactory;
 import com.google.gson.Gson;
 import org.junit.Test;
+import support.FakeRuleDetails;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -31,7 +32,7 @@ public class CodeClimateIssueTest {
     private CodeClimateIssue createIssueForSeverity(String severity) {
         return new CodeClimateIssue(
                 "check",
-                Severity.from(severity),
+                Severity.from(new FakeRuleDetails(severity)),
                 "desc",
                 new Content(""),
                 new Location("path", 0, 1),

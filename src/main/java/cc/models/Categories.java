@@ -1,5 +1,7 @@
 package cc.models;
 
+import org.sonarsource.sonarlint.core.client.api.common.RuleDetails;
+
 import java.util.ArrayList;
 
 class Categories extends ArrayList<String> {
@@ -16,5 +18,9 @@ class Categories extends ArrayList<String> {
             }
         }
         add(category);
+    }
+
+    public static Categories from(RuleDetails ruleDetails) {
+        return new Categories(ruleDetails.getType());
     }
 }

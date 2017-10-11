@@ -24,10 +24,11 @@ public class CodeClimateIssue {
     public static CodeClimateIssue from(Issue issue, RuleDetails ruleDetails) {
         String checkName = issue.getRuleKey();
         String description = issue.getMessage();
-        Severity severity = Severity.from(ruleDetails.getSeverity());
-        Content content = new Content(ruleDetails.getHtmlDescription());
-        Location location = new Location(issue.getInputFile().getPath(), issue.getStartLine(), issue.getEndLine());
-        Categories categories = new Categories(ruleDetails.getType());
+        Severity severity = Severity.from(ruleDetails);
+        Content content = Content.from(ruleDetails);
+        Location location = Location.from(issue);
+        Categories categories = Categories.from(ruleDetails);
         return new CodeClimateIssue(checkName, severity, description, content, location, categories);
     }
+
 }

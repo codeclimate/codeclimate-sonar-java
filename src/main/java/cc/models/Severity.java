@@ -1,6 +1,7 @@
 package cc.models;
 
 import com.google.gson.annotations.SerializedName;
+import org.sonarsource.sonarlint.core.client.api.common.RuleDetails;
 
 public enum Severity {
     @SerializedName("major")
@@ -14,7 +15,11 @@ public enum Severity {
     @SerializedName("blocker")
     BLOCKER;
 
-    public static Severity from(String value) {
-        return valueOf(value.toUpperCase());
+    public static Severity from(RuleDetails ruleDetails) {
+        try {
+            return valueOf(ruleDetails.getSeverity().toUpperCase());
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Unknown severity", e);
+        }
     }
 }
