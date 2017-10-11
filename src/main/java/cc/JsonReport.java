@@ -35,7 +35,7 @@ public class JsonReport implements org.sonarlint.cli.report.Reporter {
             RuleDetails ruleDetails = ruleDescriptionProducer.apply(issue.getRuleKey());
 
             if (VALID_RULE_DETAIL_TYPES.contains(ruleDetails.getType())) {
-                CodeClimateIssue codeClimateIssue = new CodeClimateIssue(issue, ruleDetails);
+                CodeClimateIssue codeClimateIssue = CodeClimateIssue.from(issue, ruleDetails);
                 System.out.println(gson.toJson(codeClimateIssue) + "\0");
             }
         }
