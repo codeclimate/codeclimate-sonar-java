@@ -19,11 +19,11 @@ public class Finder extends InputFileFinder {
     final Charset charset;
     final Matcher matcher;
 
-    public Finder(List<String> includedPaths, String testsGlobPattern, String excludeGlobPattern, Charset charset) {
-        super(null, testsGlobPattern, excludeGlobPattern, charset);
+    public Finder(List<String> includedPaths, String testsGlobPattern, Charset charset) {
+        super(null, testsGlobPattern, null, charset);
         this.includedPaths = includedPaths;
         this.charset = charset;
-        this.matcher = new Matcher(testsGlobPattern, excludeGlobPattern, charset);
+        this.matcher = new Matcher(testsGlobPattern, charset);
     }
 
     @Override
@@ -48,11 +48,11 @@ public class Finder extends InputFileFinder {
     }
 
     ClientInputFile toClientInputFile(Path baseDir, Path path) {
-        boolean valid = matcher.validatePath(baseDir, path);
-        if (valid) {
-            return createInputFile(path, matcher.isTest(baseDir, path));
-        }
-        return null;
+        return createInputFile(path, isTest(baseDir, path));
+    }
+
+    boolean isTest(Path baseDir, Path path) {
+        return matcher.isTest(baseDir, path);
     }
 
     ClientInputFile createInputFile(Path resolvedPath, boolean test) {
@@ -60,7 +60,7 @@ public class Finder extends InputFileFinder {
     }
 
     List<Path> collectDir(Path baseDir, Path dir) throws IOException {
-        Collector collector = new Collector(baseDir, matcher);
+        Collector collector = new Collector(baseDir);
         Files.walkFileTree(dir, collector);
         return collector.getFiles();
     }

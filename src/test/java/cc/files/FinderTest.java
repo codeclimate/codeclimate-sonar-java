@@ -16,7 +16,7 @@ public class FinderTest {
 
     @Test
     public void find_files_in_directory() throws Exception {
-        Finder finder = new Finder(Arrays.asList("src/included/"), null, null, Charset.defaultCharset());
+        Finder finder = new Finder(Arrays.asList("src/included/"), null, Charset.defaultCharset());
 
         List<ClientInputFile> files = finder.collect(Paths.get("fixtures/multiple_paths"));
         List<String> paths = files.stream().map(ClientInputFile::getPath).collect(Collectors.toList());
@@ -29,7 +29,7 @@ public class FinderTest {
 
     @Test
     public void find_specified_files() throws Exception {
-        Finder finder = new Finder(Arrays.asList("config.json", "Main.java"), null, null, Charset.defaultCharset());
+        Finder finder = new Finder(Arrays.asList("config.json", "Main.java"), null, Charset.defaultCharset());
 
         List<ClientInputFile> files = finder.collect(Paths.get("fixtures/multiple_paths"));
         List<String> paths = files.stream().map(ClientInputFile::getPath).collect(Collectors.toList());
@@ -42,39 +42,13 @@ public class FinderTest {
 
     @Test
     public void find_from_multiple_locations() throws Exception {
-        Finder finder = new Finder(Arrays.asList("config.json", "src/included/java/"), null, null, Charset.defaultCharset());
+        Finder finder = new Finder(Arrays.asList("config.json", "src/included/java/"), null, Charset.defaultCharset());
 
         List<ClientInputFile> files = finder.collect(Paths.get("fixtures/multiple_paths"));
         List<String> paths = files.stream().map(ClientInputFile::getPath).collect(Collectors.toList());
 
         assertThat(paths).containsOnly(
                 "fixtures/multiple_paths/config.json",
-                "fixtures/multiple_paths/src/included/java/pkg1/HasIssue.java",
-                "fixtures/multiple_paths/src/included/java/pkg1/HasNoIssue.java"
-        );
-    }
-
-    @Test
-    public void keep_exclude_pattern_behaviour_on_directories() throws Exception {
-        Finder finder = new Finder(Arrays.asList("config.json", "src/included/java/"), null, "**/HasNoIssue.*", Charset.defaultCharset());
-
-        List<ClientInputFile> files = finder.collect(Paths.get("fixtures/multiple_paths"));
-        List<String> paths = files.stream().map(ClientInputFile::getPath).collect(Collectors.toList());
-
-        assertThat(paths).containsOnly(
-                "fixtures/multiple_paths/config.json",
-                "fixtures/multiple_paths/src/included/java/pkg1/HasIssue.java"
-        );
-    }
-
-    @Test
-    public void keep_exclude_pattern_behaviour_on_files() throws Exception {
-        Finder finder = new Finder(Arrays.asList("config.json", "src/included/java/"), null, "**/*.json", Charset.defaultCharset());
-
-        List<ClientInputFile> files = finder.collect(Paths.get("fixtures/multiple_paths"));
-        List<String> paths = files.stream().map(ClientInputFile::getPath).collect(Collectors.toList());
-
-        assertThat(paths).containsOnly(
                 "fixtures/multiple_paths/src/included/java/pkg1/HasIssue.java",
                 "fixtures/multiple_paths/src/included/java/pkg1/HasNoIssue.java"
         );
@@ -82,7 +56,7 @@ public class FinderTest {
 
     @Test
     public void differentiate_src_and_test() throws Exception {
-        Finder finder = new Finder(Arrays.asList("src/included/", "src/test/"), "{**/test/**}", null, Charset.defaultCharset());
+        Finder finder = new Finder(Arrays.asList("src/included/", "src/test/"), "{**/test/**}", Charset.defaultCharset());
 
         List<ClientInputFile> files = finder.collect(Paths.get("fixtures/multiple_paths"));
 

@@ -10,12 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Collector extends SimpleFileVisitor<Path> {
-    final Matcher matcher;
     final List<Path> files;
     final Path baseDir;
 
-    public Collector(Path baseDir, Matcher matcher) {
-        this.matcher = matcher;
+    public Collector(Path baseDir) {
         this.baseDir = baseDir;
         this.files = new ArrayList<>();
     }
@@ -26,10 +24,7 @@ public class Collector extends SimpleFileVisitor<Path> {
 
     @Override
     public FileVisitResult visitFile(final Path file, BasicFileAttributes attrs) throws IOException {
-        boolean valid = matcher.validatePath(baseDir, file);
-        if (valid) {
-            files.add(file);
-        }
+        files.add(file);
         return super.visitFile(file, attrs);
     }
 
