@@ -35,7 +35,7 @@ public class CodeClimateIssueTest {
                 Severity.from(new FakeRuleDetails(severity)),
                 "desc",
                 new Content(""),
-                new Location("path", 0, 1),
+                new Location("/tmp", "path", 0, 1),
                 new Categories("VULNERABILITY")
         );
     }

@@ -31,6 +31,12 @@ public class JsonReportTest {
     }
 
     @Test
+    public void serialize_issue_relative_path() throws Exception {
+        executeReport("major", new FakeIssue("/tmp/dir/file.java", 0, 1));
+        assertThat(output.stdout.toString()).contains("\"path\":\"dir/file.java\"");
+    }
+
+    @Test
     public void does_not_create_issue_for_unknown_severity() throws Exception {
         executeReport("unknown", new FakeIssue("file.java", 0, 1));
         assertThat(output.stderr.toString()).contains("Unknown severity");
@@ -51,6 +57,6 @@ public class JsonReportTest {
     void executeReport(String severity, FakeIssue issue) {
         RuleDetails ruleDetails = new FakeRuleDetails(severity);
         List<Trackable> trackables = asList(new FakeTrackable(issue));
-        new JsonReport().execute("prj", new Date(0), trackables, null, _ruleKey -> ruleDetails);
+        new JsonReport("/tmp").execute("prj", new Date(0), trackables, null, _ruleKey -> ruleDetails);
     }
 }

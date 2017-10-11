@@ -23,8 +23,10 @@ public class JsonReport implements org.sonarlint.cli.report.Reporter {
     );
 
     final Gson gson;
+    final String baseDir;
 
-    public JsonReport() {
+    public JsonReport(String baseDir) {
+        this.baseDir = baseDir;
         this.gson = new GsonFactory().create();
     }
 
@@ -37,7 +39,7 @@ public class JsonReport implements org.sonarlint.cli.report.Reporter {
             String type = ruleDetails.getType();
             if (VALID_RULE_DETAIL_TYPES.contains(type)) {
                 try {
-                    CodeClimateIssue codeClimateIssue = CodeClimateIssue.from(issue, ruleDetails);
+                    CodeClimateIssue codeClimateIssue = CodeClimateIssue.from(issue, ruleDetails, baseDir);
                     System.out.println(gson.toJson(codeClimateIssue) + "\0");
                 } catch (IllegalArgumentException e) {
                     System.err.println(e.getMessage());

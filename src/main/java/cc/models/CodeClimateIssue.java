@@ -21,12 +21,12 @@ public class CodeClimateIssue {
         this.categories = categories;
     }
 
-    public static CodeClimateIssue from(Issue issue, RuleDetails ruleDetails) {
+    public static CodeClimateIssue from(Issue issue, RuleDetails ruleDetails, String baseDir) {
         String checkName = issue.getRuleKey();
         String description = issue.getMessage();
         Severity severity = Severity.from(ruleDetails);
         Content content = Content.from(ruleDetails);
-        Location location = Location.from(issue);
+        Location location = Location.from(issue, baseDir);
         Categories categories = Categories.from(ruleDetails);
         return new CodeClimateIssue(checkName, severity, description, content, location, categories);
     }

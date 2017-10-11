@@ -98,7 +98,7 @@ public class CustomMain extends org.sonarlint.cli.Main {
 
         @Override
         public List<Reporter> createReporters(Path basePath) {
-            return Arrays.asList(new JsonReport());
+            return Arrays.asList(new JsonReport(basePath.toString()));
         }
     }
 }
