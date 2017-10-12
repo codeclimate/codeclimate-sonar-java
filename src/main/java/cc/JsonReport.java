@@ -38,15 +38,8 @@ public class JsonReport implements org.sonarlint.cli.report.Reporter {
 
             String type = ruleDetails.getType();
             if (VALID_RULE_DETAIL_TYPES.contains(type)) {
-                try {
-                    CodeClimateIssue codeClimateIssue = CodeClimateIssue.from(issue, ruleDetails, baseDir);
-                    System.out.println(gson.toJson(codeClimateIssue) + "\0");
-                } catch (IllegalArgumentException e) {
-                    System.err.println(e.getMessage());
-                    System.err.println(issue);
-                    System.err.println(ruleDetails);
-                    e.printStackTrace(System.err);
-                }
+                CodeClimateIssue codeClimateIssue = CodeClimateIssue.from(issue, ruleDetails, baseDir);
+                System.out.println(gson.toJson(codeClimateIssue) + "\0");
             }
         }
     }
