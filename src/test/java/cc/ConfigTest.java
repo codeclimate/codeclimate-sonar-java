@@ -2,6 +2,8 @@ package cc;
 
 import org.junit.Test;
 
+import java.nio.charset.Charset;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class ConfigTest {
@@ -20,8 +22,14 @@ public class ConfigTest {
 
     @Test
     public void fetch_charset() throws Exception {
-        Config config = Config.gson().fromJson("{\"config\":{\"charset\":\"utf-8\"}}", Config.class);
-        assertThat(config.getCharset()).isEqualTo("utf-8");
+        Config config = Config.gson().fromJson("{\"config\":{\"charset\":\"utf-16\"}}", Config.class);
+        assertThat(config.getCharset()).isEqualTo(Charset.forName("UTF-16"));
+    }
+
+    @Test
+    public void defaults_charset_to_utf8() throws Exception {
+        Config config = Config.gson().fromJson("{\"config\":{}}", Config.class);
+        assertThat(config.getCharset()).isEqualTo(Charset.forName("UTF-8"));
     }
 
     @Test

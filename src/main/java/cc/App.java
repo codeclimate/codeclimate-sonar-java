@@ -26,10 +26,10 @@ public class App {
 
     public static void execute(String[] args, System2 system) {
         try {
-            Options parsedOpts = Options.parse(args);
-            Charset charset = createCharset(parsedOpts);
-
             Config config = Config.from(system.getProperty("config"));
+            Options parsedOpts = Options.parse(args);
+            Charset charset = config.getCharset();
+
             InputFileFinder fileFinder = new Finder(config.getIncludePaths(), config.getTestsPatterns(), charset);
             ReportFactory reportFactory = new cc.report.ReportFactory(charset);
             ConfigurationReader reader = new ConfigurationReader();
@@ -41,14 +41,6 @@ public class App {
         } catch (Exception e) {
             LOGGER.error(e.getMessage(), e);
             system.exit(ERROR);
-        }
-    }
-
-    private static Charset createCharset(Options parsedOpts) {
-        if (parsedOpts.charset() != null) {
-            return Charset.forName(parsedOpts.charset());
-        } else {
-            return Charset.defaultCharset();
         }
     }
 

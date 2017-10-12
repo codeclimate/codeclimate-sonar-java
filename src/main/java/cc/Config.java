@@ -6,6 +6,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.stream.JsonReader;
 
 import java.io.FileReader;
+import java.nio.charset.Charset;
 import java.util.Arrays;
 import java.util.List;
 
@@ -22,8 +23,8 @@ public class Config {
         return includePaths;
     }
 
-    public String getCharset() {
-        return config.charset;
+    public Charset getCharset() {
+        return createCharset(config.charset);
     }
 
     public String getTestsPatterns() {
@@ -35,6 +36,15 @@ public class Config {
             return null;
         }
         return "{" + String.join(",", patterns) + "}";
+    }
+
+
+    Charset createCharset(String charset) {
+        if (charset != null) {
+            return Charset.forName(charset);
+        } else {
+            return Charset.defaultCharset();
+        }
     }
 
     public static Config from(String file) {
