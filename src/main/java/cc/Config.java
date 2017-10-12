@@ -5,15 +5,22 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.stream.JsonReader;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Config {
-    List<String> includePaths;
+    public List<String> includePaths = Arrays.asList("");
 
-    public static Config from(String file) throws FileNotFoundException {
-        return gson().fromJson(new JsonReader(new FileReader(file)), Config.class);
+    public static Config from(String file) {
+        try {
+            return gson().fromJson(new JsonReader(new FileReader(file)), Config.class);
+        } catch (Exception e) {
+            return new Config();
+        }
     }
 
     private static Gson gson() {
