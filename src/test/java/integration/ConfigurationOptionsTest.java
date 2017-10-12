@@ -5,7 +5,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.sonarlint.cli.SonarProperties;
-import support.TestSystem;
+import support.SystemHelper;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
@@ -16,7 +16,7 @@ public class ConfigurationOptionsTest {
     ByteArrayOutputStream stdout;
     ByteArrayOutputStream stderr;
 
-    TestSystem system;
+    SystemHelper system;
 
     @BeforeClass
     public static void beforeAll() {
@@ -25,7 +25,7 @@ public class ConfigurationOptionsTest {
 
     @Before
     public void setUp() throws Exception {
-        system = new TestSystem();
+        system = new SystemHelper();
         stdout = new ByteArrayOutputStream();
         stderr = new ByteArrayOutputStream();
 

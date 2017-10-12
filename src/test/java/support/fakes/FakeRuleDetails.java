@@ -1,4 +1,4 @@
-package support;
+package support.fakes;
 
 import org.sonarsource.sonarlint.core.client.api.common.RuleDetails;
 

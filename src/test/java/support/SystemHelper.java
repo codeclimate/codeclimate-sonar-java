@@ -4,7 +4,7 @@ import org.sonarlint.cli.util.System2;
 
 import java.util.Properties;
 
-public class TestSystem extends System2 {
+public class SystemHelper extends System2 {
     public int exitCode;
     final Properties properties = new Properties();
 
