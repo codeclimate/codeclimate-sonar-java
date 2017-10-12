@@ -29,10 +29,4 @@ public class ConfigTest {
         Config config = Config.gson().fromJson("{\"config\":{\"tests_patterns\":[\"src/test/**\",\"src/test2/**\"]}}", Config.class);
         assertThat(config.getTestsPatterns()).isEqualTo("{src/test/**,src/test2/**}");
     }
-
-    @Test
-    public void fetch_exclusion_patterns() throws Exception {
-        Config config = Config.gson().fromJson("{\"config\":{\"exclusion_patterns\":[\"src/excluded/**\",\"src/test2/**\"]}}", Config.class);
-        assertThat(config.getExclusionPatterns()).isEqualTo("{src/excluded/**,src/test2/**}");
-    }
 }

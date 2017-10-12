@@ -16,7 +16,6 @@ public class Config {
     private class EngineConfig {
         public String charset;
         public List<String> testsPatterns;
-        public List<String> exclusionPatterns;
     }
 
     public List<String> getIncludePaths() {
@@ -29,10 +28,6 @@ public class Config {
 
     public String getTestsPatterns() {
         return joinPatterns(config.testsPatterns);
-    }
-
-    public String getExclusionPatterns() {
-        return joinPatterns(config.exclusionPatterns);
     }
 
     private String joinPatterns(List<String> patterns) {
