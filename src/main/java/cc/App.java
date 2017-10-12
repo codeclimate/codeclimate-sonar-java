@@ -21,13 +21,12 @@ public class App {
     static final int ERROR = 1;
 
     public static void main(String[] args) {
-        execute(args, System2.INSTANCE);
+        execute(System2.INSTANCE);
     }
 
-    public static void execute(String[] args, System2 system) {
+    public static void execute(System2 system) {
         try {
             Config config = Config.from(system.getProperty("config"));
-            Options parsedOpts = Options.parse(args);
             Charset charset = config.getCharset();
 
             InputFileFinder fileFinder = new Finder(config.getIncludePaths(), config.getTestsPatterns(), charset);
@@ -36,7 +35,7 @@ public class App {
             SonarLintFactory sonarLintFactory = new SonarLintFactory(reader);
             Path projectHome = getProjectHome(system);
 
-            int exitCode = new CustomMain(parsedOpts, sonarLintFactory, reportFactory, fileFinder, projectHome).run();
+            int exitCode = new CustomMain(new Options(), sonarLintFactory, reportFactory, fileFinder, projectHome).run();
             system.exit(exitCode);
         } catch (Exception e) {
             LOGGER.error(e.getMessage(), e);
