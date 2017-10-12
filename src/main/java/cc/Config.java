@@ -14,8 +14,8 @@ public class Config {
     private EngineConfig config = new EngineConfig();
 
     private class EngineConfig {
-        public String charset;
-        public List<String> testsPatterns;
+        String charset;
+        List<String> testsPatterns;
     }
 
     public List<String> getIncludePaths() {
@@ -30,7 +30,7 @@ public class Config {
         return joinPatterns(config.testsPatterns);
     }
 
-    private String joinPatterns(List<String> patterns) {
+    String joinPatterns(List<String> patterns) {
         if (patterns == null) {
             return null;
         }
@@ -45,7 +45,7 @@ public class Config {
         }
     }
 
-    public static Gson gson() {
+    static Gson gson() {
         return new GsonBuilder()
                 .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
                 .create();
