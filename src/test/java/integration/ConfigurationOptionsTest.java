@@ -42,8 +42,8 @@ public class ConfigurationOptionsTest {
         App.execute(new String[]{}, system);
 
         String output = stdout.toString();
-        assertThat(output).contains("issue", "fixtures/multiple_paths/src/included/java/pkg1/HasIssue.java");
-        assertThat(output).doesNotContain("fixtures/multiple_paths/src/excluded/java/pkg1/HasIssue.java");
+        assertThat(output).contains("\"type\":\"issue\"", "src/included/java/pkg1/HasIssue.java");
+        assertThat(output).doesNotContain("src/excluded/java/pkg1/HasIssue.java");
     }
 
     @Test
@@ -52,9 +52,9 @@ public class ConfigurationOptionsTest {
 
         String output = stdout.toString();
         assertThat(output).contains(
-                "issue",
-                "fixtures/multiple_paths/src/included/java/pkg1/HasIssue.java",
-                "fixtures/multiple_paths/src/excluded/java/pkg1/HasIssue.java"
+                "\"type\":\"issue\"",
+                "src/included/java/pkg1/HasIssue.java",
+                "src/excluded/java/pkg1/HasIssue.java"
         );
     }
 }
