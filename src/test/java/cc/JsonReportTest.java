@@ -37,9 +37,9 @@ public class JsonReportTest {
     }
 
     @Test
-    public void does_not_create_issue_for_unknown_severity() throws Exception {
-        executeReport("unknown", new FakeIssue("file.java", 0, 1));
-        assertThat(output.stderr.toString()).contains("Unknown severity");
+    public void does_not_include_unknown_severity() throws Exception {
+        executeReport(null, new FakeIssue("file.java", 0, 1));
+        assertThat(output.stdout.toString()).doesNotContain("severity");
     }
 
     @Test

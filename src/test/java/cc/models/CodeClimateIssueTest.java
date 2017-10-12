@@ -3,30 +3,24 @@ package cc.models;
 import cc.serialization.GsonFactory;
 import com.google.gson.Gson;
 import org.junit.Test;
-import support.FakeRuleDetails;
+import support.fakes.FakeRuleDetails;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class CodeClimateIssueTest {
 
-    @Test(expected = IllegalArgumentException.class)
-    public void raise_error_on_invalid_severity() throws Exception {
-        createIssueForSeverity("unknown");
-    }
-
     @Test
-    public void accepts_only_valid_severities() throws Exception {
-        assertThat(createIssueForSeverity("major").severity).isEqualTo(Severity.MAJOR);
-        assertThat(createIssueForSeverity("minor").severity).isEqualTo(Severity.MINOR);
-        assertThat(createIssueForSeverity("critical").severity).isEqualTo(Severity.CRITICAL);
-        assertThat(createIssueForSeverity("blocker").severity).isEqualTo(Severity.BLOCKER);
-        assertThat(createIssueForSeverity("info").severity).isEqualTo(Severity.INFO);
+    public void down_case_severities() throws Exception {
+        assertThat(createIssueForSeverity("MAJOR").severity).isEqualTo("major");
+        assertThat(createIssueForSeverity("MINOR").severity).isEqualTo("minor");
+        assertThat(createIssueForSeverity("CRITICAL").severity).isEqualTo("critical");
+        assertThat(createIssueForSeverity(null).severity).isNull();
     }
 
     @Test
     public void properly_serialize_severity() throws Exception {
         Gson gson = new GsonFactory().create();
-        assertThat(gson.toJson(createIssueForSeverity("info"))).contains("\"severity\":\"info\"");
+        assertThat(gson.toJson(createIssueForSeverity("INFO"))).contains("\"severity\":\"info\"");
     }
 
     private CodeClimateIssue createIssueForSeverity(String severity) {
