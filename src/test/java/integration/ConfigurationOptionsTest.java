@@ -5,7 +5,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.sonarlint.cli.SonarProperties;
-import support.TestSystem;
+import support.SystemHelper;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
@@ -16,7 +16,7 @@ public class ConfigurationOptionsTest {
     ByteArrayOutputStream stdout;
     ByteArrayOutputStream stderr;
 
-    TestSystem system;
+    SystemHelper system;
 
     @BeforeClass
     public static void beforeAll() {
@@ -25,7 +25,7 @@ public class ConfigurationOptionsTest {
 
     @Before
     public void setUp() throws Exception {
-        system = new TestSystem();
+        system = new SystemHelper();
         stdout = new ByteArrayOutputStream();
         stderr = new ByteArrayOutputStream();
 
@@ -42,8 +42,8 @@ public class ConfigurationOptionsTest {
         App.execute(new String[]{}, system);
 
         String output = stdout.toString();
-        assertThat(output).contains("issue", "fixtures/multiple_paths/src/included/java/pkg1/HasIssue.java");
-        assertThat(output).doesNotContain("fixtures/multiple_paths/src/excluded/java/pkg1/HasIssue.java");
+        assertThat(output).contains("\"type\":\"issue\"", "src/included/java/pkg1/HasIssue.java");
+        assertThat(output).doesNotContain("src/excluded/java/pkg1/HasIssue.java");
     }
 
     @Test
@@ -52,9 +52,9 @@ public class ConfigurationOptionsTest {
 
         String output = stdout.toString();
         assertThat(output).contains(
-                "issue",
-                "fixtures/multiple_paths/src/included/java/pkg1/HasIssue.java",
-                "fixtures/multiple_paths/src/excluded/java/pkg1/HasIssue.java"
+                "\"type\":\"issue\"",
+                "src/included/java/pkg1/HasIssue.java",
+                "src/excluded/java/pkg1/HasIssue.java"
         );
     }
 }
