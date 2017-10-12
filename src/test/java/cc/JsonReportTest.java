@@ -43,15 +43,15 @@ public class JsonReportTest {
     }
 
     @Test
-    public void does_not_create_issue_for_unknown_path() throws Exception {
+    public void does_not_include_unknown_path() throws Exception {
         executeReport("major", new FakeIssue(null, 1, 0));
-        assertThat(output.stderr.toString()).contains("Impossible to identify issue's location");
+        assertThat(output.stdout.toString()).doesNotContain("path");
     }
 
     @Test
-    public void does_not_create_issue_for_unknown_location() throws Exception {
+    public void does_not_include_unknown_location() throws Exception {
         executeReport("major", new FakeIssue("file.java", null, null));
-        assertThat(output.stderr.toString()).contains("Impossible to identify issue's location");
+        assertThat(output.stdout.toString()).doesNotContain("lines");
     }
 
     void executeReport(String severity, FakeIssue issue) {

@@ -7,20 +7,19 @@ class Location {
     final String path;
     final Lines lines;
 
-    public Location(String baseDir, String path, Integer startLine, Integer endLine) {
+    public Location(String baseDir, String path, Lines lines) {
         String regex = ("^" + baseDir + "/").replace("//", "/");
         this.path = path.replaceFirst(regex, "");
-        this.lines = new Lines(startLine, endLine);
+        this.lines = lines;
     }
 
-    public static Location from(Issue issue, String baseDir) {
+    public static Location from(String baseDir, Issue issue) {
         ClientInputFile inputFile = issue.getInputFile();
 
-        if (inputFile == null || inputFile.getPath() == null ||
-                issue.getStartLine() == null || issue.getEndLine() == null) {
-            throw new IllegalArgumentException("Impossible to identify issue's location");
+        if (inputFile == null || inputFile.getPath() == null) {
+            return null;
         }
 
-        return new Location(baseDir, inputFile.getPath(), issue.getStartLine(), issue.getEndLine());
+        return new Location(baseDir, inputFile.getPath(), Lines.from(issue));
     }
 }

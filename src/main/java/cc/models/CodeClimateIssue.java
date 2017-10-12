@@ -26,7 +26,7 @@ public class CodeClimateIssue {
         String description = issue.getMessage();
         String severity = Severity.from(ruleDetails);
         Content content = Content.from(ruleDetails);
-        Location location = Location.from(issue, baseDir);
+        Location location = Location.from(baseDir, issue);
         Categories categories = Categories.from(ruleDetails);
         return new CodeClimateIssue(checkName, severity, description, content, location, categories);
     }
