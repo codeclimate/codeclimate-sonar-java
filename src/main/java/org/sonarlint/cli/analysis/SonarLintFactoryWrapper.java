@@ -15,6 +15,5 @@ public class SonarLintFactoryWrapper extends SonarLintFactory {
         } catch (Exception e) {
             throw new IllegalStateException("Error loading plugins", e);
         }
-
     }
 }
