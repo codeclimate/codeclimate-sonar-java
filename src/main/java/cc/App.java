@@ -7,7 +7,6 @@ import org.sonarlint.cli.Options;
 import org.sonarlint.cli.analysis.SonarLintFactory;
 import org.sonarlint.cli.config.ConfigurationReader;
 import org.sonarlint.cli.report.ReportFactory;
-import org.sonarlint.cli.util.Logger;
 import org.sonarlint.cli.util.System2;
 
 import java.nio.charset.Charset;
@@ -17,7 +16,6 @@ import java.nio.file.Paths;
 import static org.sonarlint.cli.SonarProperties.PROJECT_HOME;
 
 public class App {
-    public static Logger LOGGER = Logger.get();
     static final int ERROR = 1;
 
     public static void main(String[] args) {
@@ -38,7 +36,7 @@ public class App {
             int exitCode = new CustomMain(new Options(), sonarLintFactory, reportFactory, fileFinder, projectHome).run();
             system.exit(exitCode);
         } catch (Exception e) {
-            LOGGER.error(e.getMessage(), e);
+            e.printStackTrace(System.err);
             system.exit(ERROR);
         }
     }

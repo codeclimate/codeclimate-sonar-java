@@ -50,11 +50,20 @@ public class ConfigurationOptionsTest {
     public void include_all_files_by_default() throws Exception {
         App.execute(system);
 
-        String output = stdout.toString();
-        assertThat(output).contains(
+        assertThat(stdout.toString()).contains(
                 "\"type\":\"issue\"",
                 "src/included/java/pkg1/HasIssue.java",
                 "src/excluded/java/pkg1/HasIssue.java"
         );
+    }
+
+    @Test
+    public void capture_exceptions_and_log_to_stderr() throws Exception {
+        system.removeProperty(SonarProperties.PROJECT_HOME);
+
+        App.execute(system);
+
+        assertThat(system.exitCode).isEqualTo(1);
+        assertThat(stderr.toString()).contains("Can't find project home. System property not set: project.home");
     }
 }
