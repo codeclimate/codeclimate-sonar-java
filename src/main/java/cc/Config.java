@@ -36,7 +36,7 @@ public class Config {
 
     public Path getWorkdir() {
         if (config.workDir == null) {
-            return Paths.get("/tmp/sonarlint");
+            return Paths.get("/tmp/workspace");
         }
         return Paths.get(config.workDir);
     }

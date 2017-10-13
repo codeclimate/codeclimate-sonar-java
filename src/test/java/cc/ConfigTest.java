@@ -54,6 +54,6 @@ public class ConfigTest {
     @Test
     public void has_default_work_dir() throws Exception {
         Config config = Config.gson().fromJson("{}", Config.class);
-        assertThat(config.getWorkdir()).isEqualTo(Paths.get("/tmp/sonarlint"));
+        assertThat(config.getWorkdir()).isEqualTo(Paths.get("/tmp/workspace"));
     }
 }
