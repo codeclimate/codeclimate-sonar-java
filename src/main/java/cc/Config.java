@@ -19,7 +19,7 @@ public class Config {
     private class EngineConfig {
         String charset;
         List<String> testsPatterns;
-        String workDir;
+        String sonarlintDir;
     }
 
     public List<String> getIncludePaths() {
@@ -34,11 +34,8 @@ public class Config {
         return joinPatterns(config.testsPatterns);
     }
 
-    public Path getWorkdir() {
-        if (config.workDir == null) {
-            return Paths.get("/tmp/workspace");
-        }
-        return Paths.get(config.workDir);
+    public Path getSonarlintDir() {
+        return Paths.get("/tmp/sonarlint");
     }
 
     String joinPatterns(List<String> patterns) {

@@ -44,16 +44,10 @@ public class ConfigTest {
         Config config = Config.gson().fromJson("{\"config\":{}}", Config.class);
         assertThat(config.getTestsPatterns()).isNull();
     }
-
-    @Test
-    public void override_work_dir() throws Exception {
-        Config config = Config.gson().fromJson("{\"config\":{\"work_dir\":\"/tmp/wd\"}}", Config.class);
-        assertThat(config.getWorkdir()).isEqualTo(Paths.get("/tmp/wd"));
-    }
-
+    
     @Test
     public void has_default_work_dir() throws Exception {
         Config config = Config.gson().fromJson("{}", Config.class);
-        assertThat(config.getWorkdir()).isEqualTo(Paths.get("/tmp/workspace"));
+        assertThat(config.getSonarlintDir()).isEqualTo(Paths.get("/tmp/sonarlint"));
     }
 }

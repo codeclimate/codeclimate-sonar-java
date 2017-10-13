@@ -30,7 +30,7 @@ public class App {
             InputFileFinder fileFinder = new Finder(config.getIncludePaths(), config.getTestsPatterns(), charset);
             ReportFactory reportFactory = new cc.report.ReportFactory(charset);
             ConfigurationReader reader = new ConfigurationReader();
-            SonarLintFactory sonarLintFactory = new SonarLintFactory(reader, config.getWorkdir());
+            SonarLintFactory sonarLintFactory = new SonarLintFactory(reader, config.getSonarlintDir());
             Path projectHome = getProjectHome(system);
 
             int exitCode = new EngineWrapper(new Options(), sonarLintFactory, reportFactory, fileFinder, projectHome).run();
