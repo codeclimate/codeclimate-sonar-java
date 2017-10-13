@@ -7,6 +7,8 @@ import com.google.gson.stream.JsonReader;
 
 import java.io.FileReader;
 import java.nio.charset.Charset;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 
@@ -17,6 +19,7 @@ public class Config {
     private class EngineConfig {
         String charset;
         List<String> testsPatterns;
+        String sonarlintDir;
     }
 
     public List<String> getIncludePaths() {
@@ -29,6 +32,10 @@ public class Config {
 
     public String getTestsPatterns() {
         return joinPatterns(config.testsPatterns);
+    }
+
+    public Path getSonarlintDir() {
+        return Paths.get("/tmp/sonarlint");
     }
 
     String joinPatterns(List<String> patterns) {

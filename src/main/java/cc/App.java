@@ -1,10 +1,10 @@
 package cc;
 
+import cc.analysis.SonarLintFactory;
 import cc.files.Finder;
 import org.sonarlint.cli.EngineWrapper;
 import org.sonarlint.cli.InputFileFinder;
 import org.sonarlint.cli.Options;
-import org.sonarlint.cli.analysis.SonarLintFactory;
 import org.sonarlint.cli.config.ConfigurationReader;
 import org.sonarlint.cli.report.ReportFactory;
 import org.sonarlint.cli.util.System2;
@@ -30,7 +30,7 @@ public class App {
             InputFileFinder fileFinder = new Finder(config.getIncludePaths(), config.getTestsPatterns(), charset);
             ReportFactory reportFactory = new cc.report.ReportFactory(charset);
             ConfigurationReader reader = new ConfigurationReader();
-            SonarLintFactory sonarLintFactory = new SonarLintFactory(reader);
+            SonarLintFactory sonarLintFactory = new SonarLintFactory(reader, config.getSonarlintDir());
             Path projectHome = getProjectHome(system);
 
             int exitCode = new EngineWrapper(new Options(), sonarLintFactory, reportFactory, fileFinder, projectHome).run();
