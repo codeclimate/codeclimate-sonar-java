@@ -3,6 +3,7 @@ package cc;
 import org.junit.Test;
 
 import java.nio.charset.Charset;
+import java.nio.file.Paths;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -42,5 +43,17 @@ public class ConfigTest {
     public void null_tests_patterns_does_not_cause_error() throws Exception {
         Config config = Config.gson().fromJson("{\"config\":{}}", Config.class);
         assertThat(config.getTestsPatterns()).isNull();
+    }
+
+    @Test
+    public void override_work_dir() throws Exception {
+        Config config = Config.gson().fromJson("{\"config\":{\"work_dir\":\"/tmp/wd\"}}", Config.class);
+        assertThat(config.getWorkdir()).isEqualTo(Paths.get("/tmp/wd"));
+    }
+
+    @Test
+    public void has_default_work_dir() throws Exception {
+        Config config = Config.gson().fromJson("{}", Config.class);
+        assertThat(config.getWorkdir()).isEqualTo(Paths.get("/tmp/sonarlint"));
     }
 }
