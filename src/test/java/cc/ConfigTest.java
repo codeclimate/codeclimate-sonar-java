@@ -37,4 +37,10 @@ public class ConfigTest {
         Config config = Config.gson().fromJson("{\"config\":{\"tests_patterns\":[\"src/test/**\",\"src/test2/**\"]}}", Config.class);
         assertThat(config.getTestsPatterns()).isEqualTo("{src/test/**,src/test2/**}");
     }
+
+    @Test
+    public void null_tests_patterns_does_not_cause_error() throws Exception {
+        Config config = Config.gson().fromJson("{\"config\":{}}", Config.class);
+        assertThat(config.getTestsPatterns()).isNull();
+    }
 }
