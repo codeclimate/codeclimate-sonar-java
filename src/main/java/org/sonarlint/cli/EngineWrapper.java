@@ -24,12 +24,15 @@ import org.sonarlint.cli.report.ReportFactory;
 
 import java.nio.file.Path;
 
-public class CustomMain extends org.sonarlint.cli.Main {
+public class EngineWrapper extends Main {
 
-    public CustomMain(Options opts, SonarLintFactory sonarLintFactory, ReportFactory reportFactory, InputFileFinder fileFinder, Path projectHome) {
+    public EngineWrapper(Options opts, SonarLintFactory sonarLintFactory, ReportFactory reportFactory, InputFileFinder fileFinder, Path projectHome) {
         super(opts, sonarLintFactory, reportFactory, fileFinder, projectHome);
     }
 
+    /**
+     * Required to change method modifier into "public", so we can call it from `cc.App`
+     */
     @Override
     public int run() {
         return super.run();
