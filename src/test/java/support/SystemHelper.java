@@ -31,4 +31,8 @@ public class SystemHelper extends System2 {
     public void setProperty(String key, String value) {
         properties.setProperty(key, value);
     }
+
+    public void removeProperty(String key) {
+        properties.remove(key);
+    }
 }

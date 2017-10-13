@@ -39,7 +39,7 @@ public class ConfigurationOptionsTest {
     public void limit_path_included_within_analysis() throws Exception {
         system.setProperty("config", "fixtures/multiple_paths/config.json");
 
-        App.execute(new String[]{}, system);
+        App.execute(system);
 
         String output = stdout.toString();
         assertThat(output).contains("\"type\":\"issue\"", "src/included/java/pkg1/HasIssue.java");
@@ -48,13 +48,22 @@ public class ConfigurationOptionsTest {
 
     @Test
     public void include_all_files_by_default() throws Exception {
-        App.execute(new String[]{}, system);
+        App.execute(system);
 
-        String output = stdout.toString();
-        assertThat(output).contains(
+        assertThat(stdout.toString()).contains(
                 "\"type\":\"issue\"",
                 "src/included/java/pkg1/HasIssue.java",
                 "src/excluded/java/pkg1/HasIssue.java"
         );
+    }
+
+    @Test
+    public void capture_exceptions_and_log_to_stderr() throws Exception {
+        system.removeProperty(SonarProperties.PROJECT_HOME);
+
+        App.execute(system);
+
+        assertThat(system.exitCode).isEqualTo(1);
+        assertThat(stderr.toString()).contains("Can't find project home. System property not set: project.home");
     }
 }

@@ -39,4 +39,4 @@ RUN gradle clean build -x test
 
 USER app
 WORKDIR /code
-CMD cp -R /code /tmp/ && /usr/src/app/build/codeclimate-sonar /tmp/code
+CMD cp -R /code /tmp/ && /usr/src/app/build/codeclimate-sonar /tmp/code /config.json

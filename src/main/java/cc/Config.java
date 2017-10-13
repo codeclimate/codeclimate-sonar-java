@@ -6,11 +6,46 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.stream.JsonReader;
 
 import java.io.FileReader;
+import java.nio.charset.Charset;
 import java.util.Arrays;
 import java.util.List;
 
 public class Config {
-    public List<String> includePaths = Arrays.asList("");
+    private List<String> includePaths = Arrays.asList("");
+    private EngineConfig config = new EngineConfig();
+
+    private class EngineConfig {
+        String charset;
+        List<String> testsPatterns;
+    }
+
+    public List<String> getIncludePaths() {
+        return includePaths;
+    }
+
+    public Charset getCharset() {
+        return createCharset(config.charset);
+    }
+
+    public String getTestsPatterns() {
+        return joinPatterns(config.testsPatterns);
+    }
+
+    String joinPatterns(List<String> patterns) {
+        if (patterns == null) {
+            return null;
+        }
+        return "{" + String.join(",", patterns) + "}";
+    }
+
+
+    Charset createCharset(String charset) {
+        if (charset != null) {
+            return Charset.forName(charset);
+        } else {
+            return Charset.defaultCharset();
+        }
+    }
 
     public static Config from(String file) {
         try {
@@ -20,7 +55,7 @@ public class Config {
         }
     }
 
-    private static Gson gson() {
+    static Gson gson() {
         return new GsonBuilder()
                 .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
                 .create();

@@ -68,4 +68,16 @@ public class FinderTest {
                 "fixtures/multiple_paths/src/test/java/Test.java"
         );
     }
+
+    @Test
+    public void accept_multiple_test_patterns() throws Exception {
+        Finder finder = new Finder(Arrays.asList("src/"), "{**/test/**,**/test2/**}", Charset.defaultCharset());
+
+        List<ClientInputFile> files = finder.collect(Paths.get("fixtures/multiple_paths"));
+
+        assertThat(files.stream().filter(f -> f.isTest()).map(ClientInputFile::getPath).collect(Collectors.toList())).containsOnly(
+                "fixtures/multiple_paths/src/test/java/Test.java",
+                "fixtures/multiple_paths/src/test2/java/Test.java"
+        );
+    }
 }

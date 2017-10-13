@@ -1,19 +1,18 @@
-package cc;
+package cc.report;
 
 import cc.models.CodeClimateIssue;
 import cc.serialization.GsonFactory;
 import com.google.gson.Gson;
-
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
-import java.util.Arrays;
-import java.util.function.Function;
-
 import org.sonarsource.sonarlint.core.client.api.common.RuleDetails;
 import org.sonarsource.sonarlint.core.client.api.common.analysis.AnalysisResults;
 import org.sonarsource.sonarlint.core.client.api.common.analysis.Issue;
 import org.sonarsource.sonarlint.core.tracking.Trackable;
+
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Date;
+import java.util.List;
+import java.util.function.Function;
 
 public class JsonReport implements org.sonarlint.cli.report.Reporter {
 
@@ -29,6 +28,7 @@ public class JsonReport implements org.sonarlint.cli.report.Reporter {
         this.baseDir = baseDir;
         this.gson = new GsonFactory().create();
     }
+
 
     @Override
     public void execute(String projectName, Date date, Collection<Trackable> trackables, AnalysisResults result, Function<String, RuleDetails> ruleDescriptionProducer) {
