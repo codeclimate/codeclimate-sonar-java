@@ -8,4 +8,14 @@ class HasIssue {
             }
         }
     }
+
+    public void doSomething(File file, Lock lock) {
+        String b = "txt";
+        String a = b;
+        String c = a;
+        b = c;
+
+        file.delete();  // Noncompliant
+        lock.tryLock(); // Noncompliant
+    }
 }
