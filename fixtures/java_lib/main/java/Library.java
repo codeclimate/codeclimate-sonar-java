@@ -7,20 +7,8 @@ public class Library {
   }
 
 	public void foo() {
-		for (int i = 0; i < 10; i++) {
+		for (int i = 1; i != 10; i += 2) {
 			for (int k = 0; k < 20; k++) {
-				System.out.println("Hello");
-			}
-		}
-
-		for (int i = 0; i < 10; i++) {			// only references 'i'
-			for (int k = 0; k < 20; i++) {		// references both 'i' and 'k'
-				System.out.println("Hello");
-			}
-			for (int k = 0; k < 20; i++) {		// references both 'i' and 'k'
-				System.out.println("Hello");
-			}
-			for (int k = 0; k < 20; i++) {		// references both 'i' and 'k'
 				System.out.println("Hello");
 			}
 		}
