@@ -1,0 +1,74 @@
+[
+  {
+    "type": "issue",
+    "check_name": "squid:S106",
+    "severity": "major",
+    "description": "Replace this usage of System.out or System.err by a logger.",
+    "content": {
+      "body": "<p>When logging a message there are several important requirements which must be fulfilled:</p>\n<ul>\n  <li> The user must be able to easily retrieve the logs </li>\n  <li> The format of all logged message must be uniform to allow the user to easily read the log </li>\n  <li> Logged data must actually be recorded </li>\n  <li> Sensitive data must only be logged securely </li>\n</ul>\n<p>If a program directly writes to the standard outputs, there is absolutely no way to comply with those requirements. That's why defining and using a\ndedicated logger is highly recommended.</p>\n<h2>Noncompliant Code Example</h2>\n<pre>\nSystem.out.println(\"My Message\");  // Noncompliant\n</pre>\n<h2>Compliant Solution</h2>\n<pre>\nlogger.log(\"My Message\");\n</pre>\n<h2>See</h2>\n<ul>\n  <li> <a href=\"https://www.securecoding.cert.org/confluence/x/RoElAQ\">CERT, ERR02-J.</a> - Prevent exceptions while logging data </li>\n</ul>"
+    },
+    "location": {
+      "path": "main/java/Library.java",
+      "lines": {
+        "begin": 12,
+        "end": 12
+      }
+    },
+    "categories": [
+      "Bug Risk"
+    ]
+  },
+  {
+    "type": "issue",
+    "check_name": "squid:S1134",
+    "severity": "major",
+    "description": "Take the required action to fix the issue indicated by this comment.",
+    "content": {
+      "body": "<p><code>FIXME</code> tags are commonly used to mark places where a bug is suspected, but which the developer wants to deal with later.</p>\n<p>Sometimes the developer will not have the time or will simply forget to get back to that tag.</p>\n<p>This rule is meant to track those tags and to ensure that they do not go unnoticed.</p>\n<h2>Noncompliant Code Example</h2>\n<pre>\nint divide(int numerator, int denominator) {\n  return numerator / denominator;              // FIXME denominator value might be  0\n}\n</pre>\n<h2>See</h2>\n<ul>\n  <li> <a href=\"http://cwe.mitre.org/data/definitions/546.html\">MITRE, CWE-546</a> - Suspicious Comment </li>\n</ul>"
+    },
+    "location": {
+      "path": "main/java/Library.java",
+      "lines": {
+        "begin": 4,
+        "end": 4
+      }
+    },
+    "categories": [
+      "Bug Risk"
+    ]
+  },
+  {
+    "type": "issue",
+    "check_name": "squid:S1220",
+    "severity": "minor",
+    "description": "Move this file to a named package.",
+    "content": {
+      "body": "<p>According to the Java Language Specification:</p>\n<blockquote>\n  <p>Unnamed packages are provided by the Java platform principally for convenience when developing small or temporary applications or when just\n  beginning development.</p>\n</blockquote>\n<p>To enforce this best practice, classes located in default package can no longer be accessed from named ones since Java 1.4.</p>\n<h2>Noncompliant Code Example</h2>\n<pre>\npublic class MyClass { /* ... */ }\n</pre>\n<h2>Compliant Solution</h2>\n<pre>\npackage org.example;\n\npublic class MyClass{ /* ... */ }\n</pre>"
+    },
+    "location": {
+      "path": "main/java/Library.java"
+    },
+    "categories": [
+      "Bug Risk"
+    ]
+  },
+  {
+    "type": "issue",
+    "check_name": "squid:S1186",
+    "severity": "critical",
+    "description": "Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.",
+    "content": {
+      "body": "<p>There are several reasons for a method not to have a method body:</p>\n<ul>\n  <li> It is an unintentional omission, and should be fixed to prevent an unexpected behavior in production. </li>\n  <li> It is not yet, or never will be, supported. In this case an <code>UnsupportedOperationException</code> should be thrown. </li>\n  <li> The method is an intentionally-blank override. In this case a nested comment should explain the reason for the blank override. </li>\n  <li> There is a desire to provide a public, no-args constructor. In this case, it can simply be omitted from the code; a default constructor will\n  automatically be generated. </li>\n</ul>\n<h2>Noncompliant Code Example</h2>\n<pre>\npublic void doSomething() {\n}\n\npublic void doSomethingElse() {\n}\n</pre>\n<h2>Compliant Solution</h2>\n<pre>\n@Override\npublic void doSomething() {\n  // Do nothing because of X and Y.\n}\n\n@Override\npublic void doSomethingElse() {\n  throw new UnsupportedOperationException();\n}\n</pre>\n<h2>Exceptions</h2>\n<p>An abstract class may have empty methods, in order to provide default implementations for child classes.</p>\n<pre>\npublic abstract class Animal {\n  void speak() {\n  }\n}\n</pre>"
+    },
+    "location": {
+      "path": "main/java/Library.java",
+      "lines": {
+        "begin": 6,
+        "end": 6
+      }
+    },
+    "categories": [
+      "Bug Risk"
+    ]
+  }
+]
