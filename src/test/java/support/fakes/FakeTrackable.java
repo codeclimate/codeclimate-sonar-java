@@ -41,6 +41,12 @@ public class FakeTrackable implements Trackable{
 
     @CheckForNull
     @Override
+    public String getType() {
+        return null;
+    }
+
+    @CheckForNull
+    @Override
     public Integer getLine() {
         return null;
     }

@@ -32,14 +32,13 @@ build.dependsOn(infra)
 test.dependsOn(infra)
 
 dependencies {
-    compile("org.sonarsource.sonarlint.core:sonarlint-core:2.10.0.367")
-    compile("org.sonarsource.sonarlint.core:sonarlint-client-api:2.10.0.367")
+    compile("org.sonarsource.sonarlint.core:sonarlint-core:2.17.0.899")
+    compile("org.sonarsource.sonarlint.core:sonarlint-client-api:2.17.0.899")
     compile("org.sonarsource.sonarlint:sonarlint-cli:2.1.0.566")
-    compile("com.google.code.gson:gson:2.6.2")
-
+    compile("com.google.code.gson:gson:2.8.2")
 
     // Plugins
-    compile("org.sonarsource.java:sonar-java-plugin:4.3.0.7717")
+    compile("org.sonarsource.java:sonar-java-plugin:4.14.0.11784")
 
     testCompile("org.assertj:assertj-core:2.8.0")
     testCompile("org.skyscreamer:jsonassert:1.5.0")
