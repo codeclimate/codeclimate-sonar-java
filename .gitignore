@@ -3,6 +3,7 @@
 # ---- Build related
 .gradle/
 build/
+out/
 target/
 **/*.class
 
