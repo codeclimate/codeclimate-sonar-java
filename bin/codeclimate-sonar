@@ -9,6 +9,7 @@ CODE_DIR=$1; shift
 CONFIG_FILE=$1; shift
 
 java \
+  -noverify \
   -cp ${APP}:${CORE}:${LIBS} \
   -Djava.awt.headless=true  \
   -Dsonarlint.home="${BUILD_DIR}"  \
