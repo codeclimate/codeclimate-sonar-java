@@ -7,6 +7,7 @@ engines:
       squid:S00112: # Requires dedicated exceptions even for tests
         enabled: false
     config:
+      sonar.java.source: 1.8
       tests_patterns:
         - src/test/**
 exclude_paths:

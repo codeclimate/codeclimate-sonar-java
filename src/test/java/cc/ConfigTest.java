@@ -44,10 +44,16 @@ public class ConfigTest {
         Config config = Config.gson().fromJson("{\"config\":{}}", Config.class);
         assertThat(config.getTestsPatterns()).isNull();
     }
-    
     @Test
     public void has_default_work_dir() throws Exception {
         Config config = Config.gson().fromJson("{}", Config.class);
         assertThat(config.getSonarlintDir()).isEqualTo(Paths.get("/tmp/sonarlint"));
+    }
+
+    @Test
+    public void include_generic_properties() throws Exception {
+        Config config = Config.gson().fromJson("{\"config\":{\"key\":\"value\",\"charset\":\"utf-16\"}}", Config.class);
+        assertThat(config.properties().getProperty("key")).isEqualTo("value");
+        assertThat(config.getCharset()).isEqualTo(Charset.forName("UTF-16"));
     }
 }
