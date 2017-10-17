@@ -12,8 +12,10 @@ class Lines {
     }
 
     public static Lines from(Issue issue) {
-        if(issue.getStartLine() == null || issue.getEndLine() == null) {
-            return null;
+        if (issue.getStartLine() == null || issue.getEndLine() == null) {
+            System.err.println("File location was not provided, defaulting to line 1.");
+            System.err.println(issue);
+            return new Lines(1, 1);
         }
         return new Lines(issue.getStartLine(), issue.getEndLine());
     }
