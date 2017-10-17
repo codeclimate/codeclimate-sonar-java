@@ -49,9 +49,10 @@ public class JsonReportTest {
     }
 
     @Test
-    public void does_not_include_unknown_location() throws Exception {
+    public void unknown_location_defaults_to_first_line() throws Exception {
         executeReport("major", new FakeIssue("file.java", null, null));
-        assertThat(output.stdout.toString()).doesNotContain("lines");
+        assertThat(output.stdout.toString()).contains("\"lines\":{\"begin\":1,\"end\":1}");
+        assertThat(output.stderr.toString()).contains("File location was not provided, defaulting to line 1");
     }
 
     void executeReport(String severity, FakeIssue issue) {
