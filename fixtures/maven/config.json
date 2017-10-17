@@ -1,0 +1,7 @@
+{
+  "enabled": true,
+  "include_paths": [
+    "pom.xml",
+    "src/"
+  ]
+}
