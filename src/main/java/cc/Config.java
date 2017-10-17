@@ -4,38 +4,47 @@ import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.stream.JsonReader;
+import org.sonarlint.cli.Options;
 
 import java.io.FileReader;
 import java.nio.charset.Charset;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
-public class Config {
+public class Config extends Options {
     private List<String> includePaths = Arrays.asList("");
-    private EngineConfig config = new EngineConfig();
-
-    private class EngineConfig {
-        String charset;
-        List<String> testsPatterns;
-        String sonarlintDir;
-    }
+    private Map<String, Object> config = new LinkedHashMap<>();
 
     public List<String> getIncludePaths() {
         return includePaths;
     }
 
     public Charset getCharset() {
-        return createCharset(config.charset);
+        return createCharset(charset());
+    }
+
+    @Override
+    public String charset() {
+        return (String) config.get("charset");
     }
 
     public String getTestsPatterns() {
-        return joinPatterns(config.testsPatterns);
+        List<String> testsPatterns = (List<String>) config.get("tests_patterns");
+        return joinPatterns(testsPatterns);
     }
 
     public Path getSonarlintDir() {
         return Paths.get("/tmp/sonarlint");
+    }
+
+    @Override
+    public Properties properties() {
+        Properties properties = super.properties();
+        for (Map.Entry entry : config.entrySet()) {
+            properties.put(entry.getKey(), entry.getValue().toString());
+        }
+        return properties;
     }
 
     String joinPatterns(List<String> patterns) {
