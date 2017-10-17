@@ -11,7 +11,6 @@ import org.sonarsource.sonarlint.core.client.api.standalone.StandaloneSonarLintE
 import java.nio.file.Path;
 
 public class SonarLintFactory extends org.sonarlint.cli.analysis.SonarLintFactoryWrapper {
-    private static final Logger LOGGER = Logger.get();
     private Path workDir;
 
     public SonarLintFactory(ConfigurationReader reader, Path workDir) {
@@ -21,14 +20,14 @@ public class SonarLintFactory extends org.sonarlint.cli.analysis.SonarLintFactor
 
     @Override
     public SonarLint createSonarLint(Path projectHome, boolean mustBeConnected, boolean verbose) {
-        LOGGER.info("Standalone mode");
+        LogOutputWrapper logWrapper = new LogOutputWrapper(verbose);
 
         StandaloneGlobalConfiguration config = StandaloneGlobalConfiguration.builder()
                 .addPlugins(plugins())
-                .setLogOutput(new LogOutputWrapper(LOGGER, verbose))
+                .setLogOutput(logWrapper)
                 .build();
 
         StandaloneSonarLintEngine engine = new StandaloneSonarLintEngineImpl(config);
-        return new StandaloneSonarLint(engine, workDir);
+        return new StandaloneSonarLint(engine, workDir, logWrapper);
     }
 }
