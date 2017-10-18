@@ -57,10 +57,13 @@ engines:
         - app/src/test/**
 ```
 
-
 ## Sonar Documentation
 
 http://www.sonarlint.org/commandline
 http://docs.sonarqube.org/display/SCAN/Analyzing+with+SonarQube+Scanner
 
 Issue Tracker: http://jira.sonarsource.com/browse/SLCLI
+
+## Copyright
+
+See [LICENSE](LICENSE)
