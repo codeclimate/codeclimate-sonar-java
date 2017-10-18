@@ -46,7 +46,7 @@ engines:
 ```
 
 ### Tests
-Telling where the test classes are, also helps Sonar to use specific rules for those files.
+Specifying where the test classes are helps Sonar to use specific rules for those files.
 ```
 engines:
   sonar-java:
