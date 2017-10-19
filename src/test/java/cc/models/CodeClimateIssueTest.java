@@ -9,17 +9,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class CodeClimateIssueTest {
 
+    private Gson gson = new GsonFactory().create();
+
     @Test
-    public void down_case_severities() throws Exception {
-        assertThat(createIssueForSeverity("MAJOR").severity).isEqualTo("major");
-        assertThat(createIssueForSeverity("MINOR").severity).isEqualTo("minor");
-        assertThat(createIssueForSeverity("CRITICAL").severity).isEqualTo("critical");
-        assertThat(createIssueForSeverity(null).severity).isNull();
+    public void down_case_severities_uppon_serialization() throws Exception {
+        assertThat(gson.toJson(createIssueForSeverity("CRITICAL"))).contains("critical");
     }
 
     @Test
     public void properly_serialize_severity() throws Exception {
-        Gson gson = new GsonFactory().create();
         assertThat(gson.toJson(createIssueForSeverity("INFO"))).contains("\"severity\":\"info\"");
     }
 

@@ -39,21 +39,6 @@
   },
   {
     "type": "issue",
-    "check_name": "squid:S1220",
-    "severity": "minor",
-    "description": "Move this file to a named package.",
-    "content": {
-      "body": "<p>According to the Java Language Specification:</p>\n<blockquote>\n  <p>Unnamed packages are provided by the Java platform principally for convenience when developing small or temporary applications or when just\n  beginning development.</p>\n</blockquote>\n<p>To enforce this best practice, classes located in default package can no longer be accessed from named ones since Java 1.4.</p>\n<h2>Noncompliant Code Example</h2>\n<pre>\npublic class MyClass { /* ... */ }\n</pre>\n<h2>Compliant Solution</h2>\n<pre>\npackage org.example;\n\npublic class MyClass{ /* ... */ }\n</pre>"
-    },
-    "location": {
-      "path": "main/java/Library.java"
-    },
-    "categories": [
-      "Bug Risk"
-    ]
-  },
-  {
-    "type": "issue",
     "check_name": "squid:S1186",
     "severity": "critical",
     "description": "Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.",

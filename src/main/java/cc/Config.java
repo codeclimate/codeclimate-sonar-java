@@ -1,5 +1,6 @@
 package cc;
 
+import cc.models.Severity;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -36,6 +37,11 @@ public class Config extends Options {
 
     public Path getSonarlintDir() {
         return Paths.get("/tmp/sonarlint");
+    }
+
+    public Severity getMinimumSeverity() {
+        String severity = (String) config.get("minimum_severity");
+        return Severity.from(severity, Severity.MAJOR);
     }
 
     @Override

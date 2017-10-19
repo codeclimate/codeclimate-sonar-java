@@ -57,6 +57,17 @@ engines:
         - app/src/test/**
 ```
 
+### Severity
+Ignore issues with severity below the minimum:
+```
+engines:
+  sonar-java:
+    enabled: true
+    config:
+      minimum_severity: critical  # default: major
+                                  # valid values are: info, minor, major, critical, blocker
+```
+
 ## Sonar Documentation
 
 http://www.sonarlint.org/commandline

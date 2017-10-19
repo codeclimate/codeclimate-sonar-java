@@ -1,5 +1,6 @@
 package cc;
 
+import cc.models.Severity;
 import org.junit.Test;
 
 import java.nio.charset.Charset;
@@ -34,6 +35,18 @@ public class ConfigTest {
     }
 
     @Test
+    public void fetch_minimum_severity() throws Exception {
+        Config config = Config.gson().fromJson("{\"config\":{\"minimum_severity\":\"critical\"}}", Config.class);
+        assertThat(config.getMinimumSeverity()).isEqualTo(Severity.CRITICAL);
+    }
+
+    @Test
+    public void defaults_minimum_severity_to_major() throws Exception {
+        Config config = Config.gson().fromJson("{}", Config.class);
+        assertThat(config.getMinimumSeverity()).isEqualTo(Severity.MAJOR);
+    }
+
+    @Test
     public void fetch_tests_patterns() throws Exception {
         Config config = Config.gson().fromJson("{\"config\":{\"tests_patterns\":[\"src/test/**\",\"src/test2/**\"]}}", Config.class);
         assertThat(config.getTestsPatterns()).isEqualTo("{src/test/**,src/test2/**}");
@@ -44,6 +57,7 @@ public class ConfigTest {
         Config config = Config.gson().fromJson("{\"config\":{}}", Config.class);
         assertThat(config.getTestsPatterns()).isNull();
     }
+
     @Test
     public void has_default_work_dir() throws Exception {
         Config config = Config.gson().fromJson("{}", Config.class);

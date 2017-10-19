@@ -1,6 +1,7 @@
 package cc.report;
 
 import cc.models.CodeClimateIssue;
+import cc.models.Severity;
 import cc.serialization.GsonFactory;
 import com.google.gson.Gson;
 import org.sonarsource.sonarlint.core.client.api.common.RuleDetails;
@@ -15,9 +16,11 @@ import java.util.function.Function;
 public class JsonReport implements org.sonarlint.cli.report.Reporter {
 
     final Gson gson;
+    final Severity minimumSeverity;
     final String baseDir;
 
-    public JsonReport(String baseDir) {
+    public JsonReport(Severity minimumSeverity, String baseDir) {
+        this.minimumSeverity = minimumSeverity;
         this.baseDir = baseDir;
         this.gson = new GsonFactory().create();
     }
@@ -29,7 +32,10 @@ public class JsonReport implements org.sonarlint.cli.report.Reporter {
             RuleDetails ruleDetails = ruleDescriptionProducer.apply(issue.getRuleKey());
 
             CodeClimateIssue codeClimateIssue = CodeClimateIssue.from(issue, ruleDetails, baseDir);
-            System.out.println(gson.toJson(codeClimateIssue) + "\0");
+            Severity severity = codeClimateIssue.severity;
+            if (severity!= null && severity.compareTo(minimumSeverity) >= 0) {
+                System.out.println(gson.toJson(codeClimateIssue) + "\0");
+            }
         }
     }
 }

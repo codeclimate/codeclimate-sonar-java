@@ -27,7 +27,7 @@ public class App {
             Charset charset = config.getCharset();
 
             InputFileFinder fileFinder = new Finder(config.getIncludePaths(), config.getTestsPatterns(), charset);
-            ReportFactory reportFactory = new cc.report.ReportFactory(charset);
+            ReportFactory reportFactory = new cc.report.ReportFactory(charset, config.getMinimumSeverity());
             ConfigurationReader reader = new ConfigurationReader();
             SonarLintFactory sonarLintFactory = new SonarLintFactory(reader, config.getSonarlintDir());
             Path projectHome = getProjectHome(system);
