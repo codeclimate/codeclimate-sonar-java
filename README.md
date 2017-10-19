@@ -68,7 +68,6 @@ engines:
                                   # valid values are: info, minor, major, critical, blocker
 ```
 
-
 ## Sonar Documentation
 
 http://www.sonarlint.org/commandline
