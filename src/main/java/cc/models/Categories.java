@@ -48,45 +48,45 @@ class Categories extends ArrayList<Categories.Category> {
             }
             case "CODE_SMELL":
             default: {
-                Category category = fromTags(rule.getTags());
-                add(category);
+                add(fromTags(rule.getTags()));
                 break;
             }
         }
     }
 
     private Category fromTags(String[] tags) {
+        Category category = CLARITY;
         List<String> tagList = Arrays.asList(tags);
         if (tagList.contains("brain-overload")) {
-            return COMPLEXITY;
+            category = COMPLEXITY;
         }
 
         if (tagList.contains("duplicate")) {
-            return DUPLICATION;
+            category = DUPLICATION;
         }
 
         if (tagList.contains("deadlock") || tagList.contains("unpredictable")
                 || tagList.contains("bad-practice") || tagList.contains("suspicious")) {
-            return BUG_RISK;
+            category = BUG_RISK;
         }
 
         if (tagList.contains("maven")) {
-            return COMPATIBILITY;
+            category = COMPATIBILITY;
         }
 
         if (tagList.contains("performance")) {
-            return PERFORMANCE;
+            category = PERFORMANCE;
         }
 
         if (tagList.contains("convention") || tagList.contains("style")) {
-            return STYLE;
+            category = STYLE;
         }
 
         if (tagList.contains("confusing")) {
-            return CLARITY;
+            category = CLARITY;
         }
 
-        return CLARITY;
+        return category;
     }
 
     public static Categories from(RuleDetails ruleDetails) {
