@@ -17,18 +17,22 @@ import static java.nio.file.Files.isDirectory;
 public class Finder extends InputFileFinder {
     final List<String> includedPaths;
     final Charset charset;
-    final Matcher matcher;
+    final Matcher testMatcher;
+    final Matcher javaMatcher;
 
     public Finder(List<String> includedPaths, String testsGlobPattern, Charset charset) {
         super(null, testsGlobPattern, null, charset);
         this.includedPaths = includedPaths;
         this.charset = charset;
-        this.matcher = new Matcher(testsGlobPattern, charset);
+        this.testMatcher = new Matcher(testsGlobPattern, charset);
+        this.javaMatcher = new Matcher("**/*.java", charset);
+
     }
 
     @Override
     public List<ClientInputFile> collect(Path baseDir) throws IOException {
         return findPaths(baseDir).stream()
+                .filter(path -> javaMatcher.match(baseDir, path))
                 .map(path -> toClientInputFile(baseDir, path))
                 .filter(Objects::nonNull)
                 .collect(Collectors.toList());
@@ -48,11 +52,7 @@ public class Finder extends InputFileFinder {
     }
 
     ClientInputFile toClientInputFile(Path baseDir, Path path) {
-        return createInputFile(path, isTest(baseDir, path));
-    }
-
-    boolean isTest(Path baseDir, Path path) {
-        return matcher.isTest(baseDir, path);
+        return createInputFile(path, testMatcher.match(baseDir, path));
     }
 
     ClientInputFile createInputFile(Path resolvedPath, boolean test) {

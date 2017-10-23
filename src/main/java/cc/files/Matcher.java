@@ -9,11 +9,11 @@ public class Matcher {
     static final String GLOB_PREFIX = "glob:";
     static PathMatcher REFUSE_ALL = p -> false;
 
-    final PathMatcher testsMatcher;
+    final PathMatcher pathMatcher;
     final Charset charset;
 
-    public Matcher(PathMatcher testsMatcher, Charset charset) {
-        this.testsMatcher = testsMatcher;
+    public Matcher(PathMatcher pathMatcher, Charset charset) {
+        this.pathMatcher = pathMatcher;
         this.charset = charset;
     }
 
@@ -21,9 +21,9 @@ public class Matcher {
         this(createPathMatcher(testsGlobPattern, REFUSE_ALL), charset);
     }
 
-    public boolean isTest(Path baseDir, Path absoluteFilePath) {
+    public boolean match(Path baseDir, Path absoluteFilePath) {
         Path relativeFilePath = baseDir.relativize(absoluteFilePath);
-        return testsMatcher.matches(absoluteFilePath) || testsMatcher.matches(relativeFilePath);
+        return pathMatcher.matches(absoluteFilePath) || pathMatcher.matches(relativeFilePath);
     }
 
     static PathMatcher createPathMatcher(String pattern, PathMatcher defaultMatcher) {
@@ -34,7 +34,7 @@ public class Matcher {
                 return defaultMatcher;
             }
         } catch (Exception e) {
-            throw new RuntimeException("Error creating matcher with pattern: " + pattern, e);
+            throw new RuntimeException("Error creating testMatcher with pattern: " + pattern, e);
         }
     }
 }
