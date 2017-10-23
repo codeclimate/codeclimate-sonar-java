@@ -22,13 +22,14 @@ public class CodeClimateIssueTest {
     }
 
     private CodeClimateIssue createIssueForSeverity(String severity) {
+        FakeRuleDetails rule = new FakeRuleDetails(severity);
         return new CodeClimateIssue(
                 "check",
-                Severity.from(new FakeRuleDetails(severity)),
+                Severity.from(rule),
                 "desc",
                 new Content(""),
                 new Location("/tmp", "path", new Lines(0, 1)),
-                new Categories("VULNERABILITY")
+                new Categories(rule)
         );
     }
 }

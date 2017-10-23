@@ -21,13 +21,17 @@ public class SonarLintFactory extends org.sonarlint.cli.analysis.SonarLintFactor
     @Override
     public SonarLint createSonarLint(Path projectHome, boolean mustBeConnected, boolean verbose) {
         LogOutputWrapper logWrapper = new LogOutputWrapper(verbose);
+        return new StandaloneSonarLint(createEngine(logWrapper), workDir, logWrapper);
+    }
 
-        StandaloneGlobalConfiguration config = StandaloneGlobalConfiguration.builder()
-                .addPlugins(plugins())
-                .setLogOutput(logWrapper)
-                .build();
+    public StandaloneSonarLintEngineImpl createEngine(LogOutputWrapper logWrapper) {
+        return new StandaloneSonarLintEngineImpl(config(logWrapper));
+    }
 
-        StandaloneSonarLintEngine engine = new StandaloneSonarLintEngineImpl(config);
-        return new StandaloneSonarLint(engine, workDir, logWrapper);
+    public StandaloneGlobalConfiguration config(LogOutputWrapper logWrapper) {
+        return StandaloneGlobalConfiguration.builder()
+                    .addPlugins(plugins())
+                    .setLogOutput(logWrapper)
+                    .build();
     }
 }
