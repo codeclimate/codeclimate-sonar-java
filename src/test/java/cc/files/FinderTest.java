@@ -34,10 +34,7 @@ public class FinderTest {
         List<ClientInputFile> files = finder.collect(Paths.get("fixtures/multiple_paths"));
         List<String> paths = files.stream().map(ClientInputFile::getPath).collect(Collectors.toList());
 
-        assertThat(paths).containsOnly(
-                "fixtures/multiple_paths/Main.java",
-                "fixtures/multiple_paths/config.json"
-        );
+        assertThat(paths).containsOnly("fixtures/multiple_paths/Main.java");
     }
 
     @Test
@@ -48,10 +45,20 @@ public class FinderTest {
         List<String> paths = files.stream().map(ClientInputFile::getPath).collect(Collectors.toList());
 
         assertThat(paths).containsOnly(
-                "fixtures/multiple_paths/config.json",
                 "fixtures/multiple_paths/src/included/java/pkg1/HasIssue.java",
                 "fixtures/multiple_paths/src/included/java/pkg1/HasNoIssue.java"
         );
+    }
+
+    @Test
+    public void does_not_load_unecessary_files() throws Exception {
+        List<String> includedPaths = Arrays.asList("config.json", "main/", "image.gif");
+        Finder finder = new Finder(includedPaths, null, Charset.defaultCharset());
+
+        List<ClientInputFile> files = finder.collect(Paths.get("fixtures/extra_files"));
+        List<String> paths = files.stream().map(ClientInputFile::getPath).collect(Collectors.toList());
+
+        assertThat(paths).containsOnly("fixtures/extra_files/main/java/Library.java");
     }
 
     @Test

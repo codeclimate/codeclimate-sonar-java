@@ -1,0 +1,9 @@
+{
+  "enabled": true,
+  "include_paths": [
+    "src/included/",
+    "Main.java",
+    "image.gif",
+    "image.png"
+  ]
+}
