@@ -2,6 +2,7 @@ apply plugin: "java"
 
 repositories {
     jcenter()
+    maven { url 'https://jitpack.io' }
 }
 
 task copyLibs(type: Copy) {
@@ -32,10 +33,7 @@ build.dependsOn(infra)
 test.dependsOn(infra)
 
 dependencies {
-    compile("org.sonarsource.sonarlint.core:sonarlint-core:2.17.0.899")
-    compile("org.sonarsource.sonarlint.core:sonarlint-client-api:2.17.0.899")
-    compile("org.sonarsource.sonarlint:sonarlint-cli:2.1.0.566")
-    compile("com.google.code.gson:gson:2.8.2")
+    compile("com.github.codeclimate:sonar-wrapper:master-SNAPSHOT")
 
     // Plugins
     compile("org.sonarsource.java:sonar-java-plugin:4.14.0.11784")
