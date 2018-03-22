@@ -71,10 +71,13 @@ engines:
 ## Sonar Documentation
 
 http://www.sonarlint.org/commandline
+
 http://docs.sonarqube.org/display/SCAN/Analyzing+with+SonarQube+Scanner
 
 Issue Tracker: http://jira.sonarsource.com/browse/SLCLI
 
 ## Copyright
+
+This engine is developed by Code Climate using [SonarLint](http://www.sonarlint.org/commandline), it is not endorsed by SonarSoruce.
 
 See [LICENSE](LICENSE)
