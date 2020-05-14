@@ -33,10 +33,10 @@ build.dependsOn(infra)
 test.dependsOn(infra)
 
 dependencies {
-    compile("com.github.codeclimate:codeclimate-ss-analyzer-wrapper:master-SNAPSHOT")
+    compile("com.github.codeclimate:codeclimate-ss-analyzer-wrapper:channel/sonar-5-14-SNAPSHOT")
 
     // Plugins
-    compile("org.sonarsource.java:sonar-java-plugin:4.14.0.11784")
+    compile("org.sonarsource.java:sonar-java-plugin:5.14.0.18788")
 
     testCompile("org.assertj:assertj-core:2.8.0")
     testCompile("org.skyscreamer:jsonassert:1.5.0")
