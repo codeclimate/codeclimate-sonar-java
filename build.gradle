@@ -33,7 +33,7 @@ build.dependsOn(infra)
 test.dependsOn(infra)
 
 dependencies {
-    compile("com.github.codeclimate:codeclimate-ss-analyzer-wrapper:channel/sonar-5-14-SNAPSHOT")
+    compile("com.github.codeclimate:codeclimate-ss-analyzer-wrapper:channel-sonar-5-14-SNAPSHOT")
 
     // Plugins
     compile("org.sonarsource.java:sonar-java-plugin:5.14.0.18788")
