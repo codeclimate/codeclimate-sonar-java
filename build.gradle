@@ -7,18 +7,18 @@ repositories {
 
 task copyLibs(type: Copy) {
     into "${buildDir}/libs"
-    from configurations.runtime
+    from configurations.runtimeClasspath
     exclude "sonar-*-plugin*.jar"
 }
 
 task copyTestLibs(type: Copy) {
     into "${buildDir}/test"
-    from configurations.testCompile
+    from configurations.testRuntimeClasspath
 }
 
 task copyPlugins(type: Copy) {
     into "${buildDir}/plugins"
-    from configurations.runtime
+    from configurations.runtimeClasspath
     include "sonar-*-plugin*.jar"
 }
 
@@ -27,20 +27,28 @@ task copyRunnable(type: Copy) {
     from "bin/codeclimate-sonar"
 }
 
+tasks.named("jar") {
+    dependsOn copyRunnable
+}
+
+tasks.named("compileTestJava") {
+    dependsOn copyRunnable
+}
+
 task infra(dependsOn: ["copyPlugins", "copyLibs", "copyTestLibs", "copyRunnable", "jar"])
 
 build.dependsOn(infra)
 test.dependsOn(infra)
 
 dependencies {
-    compile("com.github.codeclimate:codeclimate-ss-analyzer-wrapper:sonar-wrapper-update-SNAPSHOT")
+    implementation("com.github.codeclimate:codeclimate-ss-analyzer-wrapper:sonar-wrapper-update-SNAPSHOT")
 
     // Plugins
-    compile("org.sonarsource.java:sonar-java-plugin:6.12.0.24852")
+    implementation("org.sonarsource.java:sonar-java-plugin:6.12.0.24852")
 
-    testCompile("org.assertj:assertj-core:2.8.0")
-    testCompile("org.skyscreamer:jsonassert:1.5.0")
-    testCompile("junit:junit:4.12")
+    testImplementation("org.assertj:assertj-core:2.8.0")
+    testImplementation("org.skyscreamer:jsonassert:1.5.0")
+    testImplementation("junit:junit:4.12")
 }
 
 test {
