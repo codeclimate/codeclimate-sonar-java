@@ -21,16 +21,19 @@ public class Library {
 		}
 	}
 
-        public boolean bar() {
-          String multi = """
-              this is a single line string""";
-          String textBlock = """
-                \"\"\" this \nis
-                text  block!
-                !!!!
-              """;
-          Pattern p = Pattern.compile(".*|a");
-          Matcher m = p.matcher(multi);
-          return m.matches();
-        }
+  public boolean bar(Number n) {
+    if (String.class.isInstance(n)) {  // Noncompliant
+      return true;
+    }
+    String multi = """
+        this is a single line string""";
+    String textBlock = """
+          \"\"\" this \nis
+          text  block!
+          !!!!
+        """;
+    Pattern p = Pattern.compile(".*|a");
+    Matcher m = p.matcher(multi);
+    return m.matches();
+  }
 }
