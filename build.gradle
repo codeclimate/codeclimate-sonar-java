@@ -41,7 +41,7 @@ build.dependsOn(infra)
 test.dependsOn(infra)
 
 dependencies {
-    implementation("com.github.codeclimate:codeclimate-ss-analyzer-wrapper:sonar-wrapper-update-SNAPSHOT")
+    implementation("com.github.codeclimate:codeclimate-ss-analyzer-wrapper:beta-SNAPSHOT")
 
     // Plugins
     implementation("org.sonarsource.java:sonar-java-plugin:6.15.1.26025")
