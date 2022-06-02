@@ -14,9 +14,8 @@ public class SanityCheckTest {
     public void executeJavaLibFixture() throws Exception {
         String expectedOutput = File.read("src/test/resources/sanity_check_expected_issues.json");
 
-        Shell.Process process = Shell.execute("build/codeclimate-sonar fixtures/java_lib fixtures/java_source_version/config_15.json");
+        Shell.Process process = Shell.execute("build/codeclimate-sonar fixtures/java_lib");
 
-        assertThat(process.stderr).contains("Configured Java source version (sonar.java.source): 15");
         assertThat(process.exitCode).isEqualTo(0);
         assertThat(process.stdout)
                 .withFailMessage("Issues must be split by a NULL (\\0) character")
