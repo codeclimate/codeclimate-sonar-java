@@ -81,3 +81,4 @@ Issue Tracker: http://jira.sonarsource.com/browse/SLCLI
 This engine is developed by Code Climate using [SonarLint](http://www.sonarlint.org/commandline), it is not endorsed by SonarSoruce.
 
 See [LICENSE](LICENSE)
+test
