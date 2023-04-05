@@ -28,7 +28,6 @@ jobs:
     working_directory: ~/codeclimate/codeclimate-sonar-java
     steps:
       - checkout
-      - *init
       - run:
           name: Validate owner
           command: |
@@ -44,8 +43,7 @@ jobs:
           command: |
             make release RELEASE_TAG="b$CIRCLE_BUILD_NUM"
             make release RELEASE_TAG="$(echo $CIRCLE_BRANCH | grep -oP 'channel/\K[\w\-]+')"
-      - run: send_webhook
-
+            
 workflows:
   version: 2
   build_deploy:
@@ -58,3 +56,7 @@ workflows:
           filters:
             branches:
               only: /master|channel\/[\w-]+/
+
+notify:
+  webhooks:
+    - url: https://cc-slack-proxy.herokuapp.com/circle
