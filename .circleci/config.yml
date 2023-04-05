@@ -51,3 +51,4 @@ workflows:
 notify:
   webhooks:
     - url: https://cc-slack-proxy.herokuapp.com/circle
+    

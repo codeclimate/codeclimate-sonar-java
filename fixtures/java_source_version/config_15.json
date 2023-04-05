@@ -1,0 +1,7 @@
+{
+  "enabled": true,
+  "config": {
+    "sonar.java.source": "15",
+    "minimum_severity": "minor"
+  }
+}
