@@ -44,7 +44,7 @@ dependencies {
     implementation("com.github.codeclimate:codeclimate-ss-analyzer-wrapper:beta-SNAPSHOT")
 
     // Plugins
-    implementation("org.sonarsource.java:sonar-java-plugin:6.15.1.26025")
+    implementation("org.sonarsource.java:sonar-java-plugin:7.2.0.26923")
 
     testImplementation("org.assertj:assertj-core:2.8.0")
     testImplementation("org.skyscreamer:jsonassert:1.5.0")
