@@ -5,7 +5,7 @@
     "severity": "major",
     "description": "Provide the parametrized type for this generic.",
     "content": {
-      "body": "<p>Generic types shouldn't be used raw (without type parameters) in variable declarations or return values. Doing so bypasses generic type checking,\nand defers the catch of unsafe code to runtime.<\/p>\n<h2>Noncompliant Code Example<\/h2>\n<pre>\nList myList; \/\/ Noncompliant\nSet mySet; \/\/ Noncompliant\n<\/pre>\n<h2>Compliant Solution<\/h2>\n<pre>\nList&lt;String&gt; myList;\nSet&lt;? extends Number&gt; mySet;\n<\/pre>"
+      "body": "\u003cp\u003eGeneric types shouldn\u0027t be used raw (without type parameters) in variable declarations or return values. Doing so bypasses generic type checking,\nand defers the catch of unsafe code to runtime.\u003c/p\u003e\n\u003ch2\u003eNoncompliant Code Example\u003c/h2\u003e\n\u003cpre\u003e\nList myList; // Noncompliant\nSet mySet; // Noncompliant\n\u003c/pre\u003e\n\u003ch2\u003eCompliant Solution\u003c/h2\u003e\n\u003cpre\u003e\nList\u0026lt;String\u0026gt; myList;\nSet\u0026lt;? extends Number\u0026gt; mySet;\n\u003c/pre\u003e"
     },
     "location": {
       "path": "main/java/Library.java",
@@ -24,7 +24,7 @@
     "severity": "major",
     "description": "Provide the parametrized type for this generic.",
     "content": {
-      "body": "<p>Generic types shouldn't be used raw (without type parameters) in variable declarations or return values. Doing so bypasses generic type checking,\nand defers the catch of unsafe code to runtime.<\/p>\n<h2>Noncompliant Code Example<\/h2>\n<pre>\nList myList; \/\/ Noncompliant\nSet mySet; \/\/ Noncompliant\n<\/pre>\n<h2>Compliant Solution<\/h2>\n<pre>\nList&lt;String&gt; myList;\nSet&lt;? extends Number&gt; mySet;\n<\/pre>"
+      "body": "\u003cp\u003eGeneric types shouldn\u0027t be used raw (without type parameters) in variable declarations or return values. Doing so bypasses generic type checking,\nand defers the catch of unsafe code to runtime.\u003c/p\u003e\n\u003ch2\u003eNoncompliant Code Example\u003c/h2\u003e\n\u003cpre\u003e\nList myList; // Noncompliant\nSet mySet; // Noncompliant\n\u003c/pre\u003e\n\u003ch2\u003eCompliant Solution\u003c/h2\u003e\n\u003cpre\u003e\nList\u0026lt;String\u0026gt; myList;\nSet\u0026lt;? extends Number\u0026gt; mySet;\n\u003c/pre\u003e"
     },
     "location": {
       "path": "main/java/Library.java",
@@ -43,7 +43,7 @@
     "severity": "minor",
     "description": "Move this file to a named package.",
     "content": {
-      "body": "<p>According to the Java Language Specification:\u003c/p\u003e\n\u003cblockquote\u003e\n  \u003cp\u003eUnnamed packages are provided by the Java platform principally for convenience when developing small or temporary applications or when just\n  beginning development.\u003c/p\u003e\n\u003c/blockquote\u003e\n\u003cp\u003eTo enforce this best practice, classes located in default package can no longer be accessed from named ones since Java 1.4.\u003c/p\u003e\n\u003ch2\u003eNoncompliant Code Example\u003c/h2\u003e\n\u003cpre\u003e\npublic class MyClass { /* ... */ }\n\u003c/pre\u003e\n\u003ch2\u003eCompliant Solution\u003c/h2\u003e\n\u003cpre\u003e\npackage org.example;\n\npublic class MyClass{ /* ... */ }\n\u003c/pre\u003e"
+      "body": "\u003cp\u003eAccording to the Java Language Specification:\u003c/p\u003e\n\u003cblockquote\u003e\n  \u003cp\u003eUnnamed packages are provided by the Java platform principally for convenience when developing small or temporary applications or when just\n  beginning development.\u003c/p\u003e\n\u003c/blockquote\u003e\n\u003cp\u003eTo enforce this best practice, classes located in default package can no longer be accessed from named ones since Java 1.4.\u003c/p\u003e\n\u003ch2\u003eNoncompliant Code Example\u003c/h2\u003e\n\u003cpre\u003e\npublic class MyClass { /* ... */ }\n\u003c/pre\u003e\n\u003ch2\u003eCompliant Solution\u003c/h2\u003e\n\u003cpre\u003e\npackage org.example;\n\npublic class MyClass{ /* ... */ }\n\u003c/pre\u003e"
     },
     "location": {
       "path": "main/java/Library.java",
@@ -124,8 +124,27 @@
     "location": {
       "path": "main/java/Library.java",
       "lines": {
-        "begin": 27,
-        "end": 31
+        "begin": 30,
+        "end": 34
+      }
+    },
+    "categories": [
+      "Clarity"
+    ]
+  },
+  {
+    "type": "issue",
+    "check_name": "java:S6202",
+    "severity": "major",
+    "description": "Replace this usage of \"String.class.isInstance()\" with \"instanceof String\".",
+    "content": {
+      "body": "\u003cp\u003eThe \u003ccode\u003einstanceof\u003c/code\u003e construction is a preferred way to check whether a variable can be cast to some type statically because a compile-time\nerror will occur in case of incompatible types. The method \u003ca\nhref\u003d\"https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html#isInstance-java.lang.Object-\"\u003eisInstance()\u003c/a\u003e from \u003ccode\u003ejava.lang.Class\u003c/code\u003e\nworks differently and does type check at runtime only, incompatible types will therefore not be detected early in the developement, potentially\nresulting in dead code. The \u003ccode\u003eisInstance()\u003c/code\u003e method should only be used in dynamic cases when the \u003ccode\u003einstanceof\u003c/code\u003e operator can\u0027t be\nused.\u003c/p\u003e\n\u003cp\u003eThis rule raises an issue when \u003ccode\u003eisInstance()\u003c/code\u003e is used and could be replaced with an \u003ccode\u003einstanceof\u003c/code\u003e check.\u003c/p\u003e\n\u003ch2\u003eNoncompliant Code Example\u003c/h2\u003e\n\u003cpre\u003e\nint f(Object o) {\n\u0026nbsp; if (String.class.isInstance(o)) {\u0026nbsp; // Noncompliant\n\u0026nbsp; \u0026nbsp; return 42;\n\u0026nbsp; }\n\u0026nbsp; return 0;\n}\n\nint f(Number n) {\n\u0026nbsp; if (String.class.isInstance(n)) {\u0026nbsp; // Noncompliant\n\u0026nbsp; \u0026nbsp; return 42;\n\u0026nbsp; }\n\u0026nbsp; return 0;\n}\n\n\u003c/pre\u003e\n\u003ch2\u003eCompliant Solution\u003c/h2\u003e\n\u003cpre\u003e\nint f(Object o) {\n\u0026nbsp; if (o instanceof String) {\u0026nbsp; // Compliant\n\u0026nbsp; \u0026nbsp; return 42;\n\u0026nbsp; }\n\u0026nbsp; return 0;\n}\n\nint f(Number n) {\n\u0026nbsp; if (n instanceof String) {\u0026nbsp; // Compile-time error\n\u0026nbsp; \u0026nbsp; return 42;\n\u0026nbsp; }\n\u0026nbsp; return 0;\n}\n\nboolean fun(Object o, String c) throws ClassNotFoundException\n{\n  return Class.forName(c).isInstance(o); // Compliant, can\u0027t use instanceof operator here\n}\n\u003c/pre\u003e"
+    },
+    "location": {
+      "path": "main/java/Library.java",
+      "lines": {
+        "begin": 25,
+        "end": 25
       }
     },
     "categories": [
@@ -138,13 +157,13 @@
     "severity": "minor",
     "description": "Use simple literal for a single-line string.",
     "content": {
-      "body": "\u003cp\u003eIf a string fits on a single line, without concatenation and escaped newlines, you should probably continue to use a string literal.\u003c/p\u003e\n\u003ch2\u003eNoncompliant Code Example\u003c/h2\u003e\n\u003cpre\u003e\nString question \u003d \"\"\"\n              What\u0027s the point, really?\"\"\";\n\u003c/pre\u003e\n\u003ch2\u003eCompliant Solution\u003c/h2\u003e\n\u003cpre\u003e\nString question \u003d \"What\u0027s the point, really?\";\n\u003c/pre\u003e\n\u003ch2\u003eSee\u003c/h2\u003e\n\u003cul\u003e\n  \u003cli\u003e \u003ca href\u003d\"https://openjdk.java.net/jeps/368\"\u003eJEP 368: Text Blocks\u003c/a\u003e (Second Preview) \u003c/li\u003e\n  \u003cli\u003e \u003ca href\u003d\"https://cr.openjdk.java.net/~jlaskey/Strings/TextBlocksGuide_v9.html\"\u003eProgrammer\u0027s Guide To Text Blocks\u003c/a\u003e, by Jim Laskey and Stuart\n  Marks \u003c/li\u003e\n\u003c/ul\u003e"
+      "body": "\u003cp\u003eIf a string fits on a single line, without concatenation and escaped newlines, you should probably continue to use a string literal.\u003c/p\u003e\n\u003ch2\u003eNoncompliant Code Example\u003c/h2\u003e\n\u003cpre\u003e\nString question \u003d \"\"\"\n              What\u0027s the point, really?\"\"\";\n\u003c/pre\u003e\n\u003ch2\u003eCompliant Solution\u003c/h2\u003e\n\u003cpre\u003e\nString question \u003d \"What\u0027s the point, really?\";\n\u003c/pre\u003e\n\u003ch2\u003eSee\u003c/h2\u003e\n\u003cul\u003e\n  \u003cli\u003e \u003ca href\u003d\"https://openjdk.java.net/jeps/378\"\u003eJEP 378: Text Blocks\u003c/a\u003e \u003c/li\u003e\n  \u003cli\u003e \u003ca href\u003d\"https://cr.openjdk.java.net/~jlaskey/Strings/TextBlocksGuide_v9.html\"\u003eProgrammer\u0027s Guide To Text Blocks\u003c/a\u003e, by Jim Laskey and Stuart\n  Marks \u003c/li\u003e\n\u003c/ul\u003e"
     },
     "location": {
       "path": "main/java/Library.java",
       "lines": {
-        "begin": 25,
-        "end": 26
+        "begin": 28,
+        "end": 29
       }
     },
     "categories": [
@@ -157,13 +176,13 @@
     "severity": "minor",
     "description": "Use \u0027\\\"\"\"\u0027 to escape \"\"\".",
     "content": {
-      "body": "\u003cp\u003eThe use of escape sequences is mostly unnecessary in text blocks.\u003c/p\u003e\n\u003ch2\u003eNoncompliant Code Example\u003c/h2\u003e\n\u003cp\u003e\u003ccode\u003e\\n\u003c/code\u003e can be replaced by simply introducing the newline, \u003ccode\u003e\\\"\\\"\\\"\u003c/code\u003e it is sufficient to escape only the first qoute.\u003c/p\u003e\n\u003cpre\u003e\nString textBlock \u003d \"\"\"\n        \\\"\\\"\\\" this \\nis\n        text  block!\n        !!!!\n      \"\"\";\n\u003c/pre\u003e\n\u003ch2\u003eCompliant Solution\u003c/h2\u003e\n\u003cpre\u003e\nString textBlock \u003d \"\"\"\n        \\\"\"\" this\n        is\n        text  block!\n        !!!!\n      \"\"\";\n\u003c/pre\u003e\n\u003ch2\u003eSee\u003c/h2\u003e\n\u003cul\u003e\n  \u003cli\u003e \u003ca href\u003d\"https://openjdk.java.net/jeps/368\"\u003eJEP 368: Text Blocks\u003c/a\u003e (Second Preview) \u003c/li\u003e\n  \u003cli\u003e \u003ca href\u003d\"https://cr.openjdk.java.net/~jlaskey/Strings/TextBlocksGuide_v9.html\"\u003eProgrammer\u0027s Guide To Text Blocks\u003c/a\u003e, by Jim Laskey and Stuart\n  Marks \u003c/li\u003e\n\u003c/ul\u003e"
+      "body": "\u003cp\u003eThe use of escape sequences is mostly unnecessary in text blocks.\u003c/p\u003e\n\u003ch2\u003eNoncompliant Code Example\u003c/h2\u003e\n\u003cp\u003e\u003ccode\u003e\\n\u003c/code\u003e can be replaced by simply introducing the newline, \u003ccode\u003e\\\"\\\"\\\"\u003c/code\u003e it is sufficient to escape only the first qoute.\u003c/p\u003e\n\u003cpre\u003e\nString textBlock \u003d \"\"\"\n        \\\"\\\"\\\" this \\nis\n        text  block!\n        !!!!\n      \"\"\";\n\u003c/pre\u003e\n\u003ch2\u003eCompliant Solution\u003c/h2\u003e\n\u003cpre\u003e\nString textBlock \u003d \"\"\"\n        \\\"\"\" this\n        is\n        text  block!\n        !!!!\n      \"\"\";\n\u003c/pre\u003e\n\u003ch2\u003eSee\u003c/h2\u003e\n\u003cul\u003e\n  \u003cli\u003e \u003ca href\u003d\"https://openjdk.java.net/jeps/378\"\u003eJEP 378: Text Blocks\u003c/a\u003e \u003c/li\u003e\n  \u003cli\u003e \u003ca href\u003d\"https://cr.openjdk.java.net/~jlaskey/Strings/TextBlocksGuide_v9.html\"\u003eProgrammer\u0027s Guide To Text Blocks\u003c/a\u003e, by Jim Laskey and Stuart\n  Marks \u003c/li\u003e\n\u003c/ul\u003e"
     },
     "location": {
       "path": "main/java/Library.java",
       "lines": {
-        "begin": 28,
-        "end": 28
+        "begin": 31,
+        "end": 31
       }
     },
     "categories": [
@@ -181,8 +200,8 @@
     "location": {
       "path": "main/java/Library.java",
       "lines": {
-        "begin": 27,
-        "end": 27
+        "begin": 30,
+        "end": 30
       }
     },
     "categories": [
