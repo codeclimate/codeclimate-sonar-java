@@ -1,83 +1,31 @@
-# Code Climate Sonar-Java Engine
+# Try Qlty today, the newest edition of Code Climate Quality.
+#### This repository is deprecated and archived.
 
-[![Maintainability](https://api.codeclimate.com/v1/badges/1ad407dbd79378cf4b07/maintainability)](https://codeclimate.com/repos/59e0f09e141c6104f9000002/maintainability)
-[![Test Coverage](https://api.codeclimate.com/v1/badges/1ad407dbd79378cf4b07/test_coverage)](https://codeclimate.com/repos/59e0f09e141c6104f9000002/test_coverage)
-[![CircleCI](https://circleci.com/gh/codeclimate/codeclimate-sonar-java.svg?style=svg&circle-token=b800791f4e3af9079991ef70f3871f0ce09ccc81)](https://circleci.com/gh/codeclimate/codeclimate-sonar-java)
+This is a repository for a Code Climate Quality plugin which is packaged as a Docker image.
 
-`codeclimate-sonar-java` is a Code Climate engine that wraps [Sonarlint](http://www.sonarlint.org) in standalone mode.
+Code Climate Quality is being replaced with the new [Qlty](qlty.sh) code quality platform. Qlty uses a new plugin system which does not require packaging plugins as Docker images.
 
-## Installation
-```
-make image
-```
+As a result, this repository is no longer maintained and has been archived.
 
-## Tests
-```
-make test
-```
+## Advantages of Qlty plugins
+The new Qlty plugins system provides key advantages over the older, Docker-based plugin system:
 
-## Usage
+- Linting runs much faster without the overhead of virtualization
+- New versions of linters are available immediately without needing to wait for a re-packaged release
+- Plugins can be run with any arbitrary extensions (like extra rules and configs) without requiring pre-packaging
+- Eliminates security issues associated with exposing a Docker daemon
 
-1. If you haven't already, [install the Code Climate CLI](https://github.com/codeclimate/codeclimate).
-2. Configure a `.codeclimate.yml` file in your repo.
-```yml
-engines:
-  sonar-java:
-    enabled: true
-    config:
-      sonar.java.source: 7
-      tests_patterns:
-        - src/test/**
-exclude_paths:
-  - build/
-```
-3. Run `codeclimate analyze`.
+## Try out Qlty today free
 
-## Custom configurations
+[Qlty CLI](https://docs.qlty.sh/cli/quickstart) is the fastest linter and auto-formatter for polyglot teams. It is completely free and available for Mac, Windows, and Linux.
 
-### Java source version
-It is possible to specifcy a Java version the code should be compliant to, it helps Sonar to use the proper rules.
-```
-engines:
-  sonar-java:
-    enabled: true
-    config:
-      sonar.java.source: 7
-```
+  - Install Qlty CLI:
+`
+curl https://qlty.sh | sh # Mac or Linux
+`
+or ` <windows install line> `
 
-### Tests
-Specifying where the test classes are helps Sonar to use specific rules for those files.
-```
-engines:
-  sonar-java:
-    enabled: true
-    config:
-      tests_patterns:
-        - src/test/**
-        - app/src/test/**
-```
+[Qlty Cloud](https://docs.qlty.sh/cloud/quickstart) is a full code health platform for integrating code quality into development team workflows. It is free for unlimited private contributors.
+  - [Try Qlty Cloud today](https://docs.qlty.sh/cloud/quickstart)
 
-### Severity
-Ignore issues with severity below the minimum:
-```
-engines:
-  sonar-java:
-    enabled: true
-    config:
-      minimum_severity: critical  # default: major
-                                  # valid values are: info, minor, major, critical, blocker
-```
-
-## Sonar Documentation
-
-http://www.sonarlint.org/commandline
-
-http://docs.sonarqube.org/display/SCAN/Analyzing+with+SonarQube+Scanner
-
-Issue Tracker: http://jira.sonarsource.com/browse/SLCLI
-
-## Copyright
-
-This engine is developed by Code Climate using [SonarLint](http://www.sonarlint.org/commandline), it is not endorsed by SonarSoruce.
-
-See [LICENSE](LICENSE)
+**Note**: For existing customers of Quality, please see our [Migration Guide](https://docs.qlty.sh/migration/guide) for more information and resources.
