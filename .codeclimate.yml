@@ -2,7 +2,7 @@
 engines:
   sonar-java:
     enabled: true
-    channel: beta
+#     channel: beta
     checks:
       squid:S00112: # Requires dedicated exceptions even for tests
         enabled: false
